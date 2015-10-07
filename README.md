@@ -2,13 +2,13 @@ Team Hortons
 
 Website: 
 Team Hortons is currently using two websites
-1. Wikia 
+Wikia 
     -Our Planning Page (http://teamhortons.wikidot.com/planning): 
         -It contains the details of three personas. You can also check user stories for each persona by clicking "Scrum Board". 
         -Video of our team playing planning game posted on the youtube, there is a link provided under "Video of part of our Scrum meeting". 
         -Burdown Chart, Summary Stats and System Diagram are provided at the bottom of this page.
 
-2. Trello 
+Trello 
     -Product Backlog (https://trello.com/b/1iXylYSF/product-backlo) 
         -It contains three lists, each list shows user stories for one persona. Natalia has 4 user stories, Niki has 7 user stories and Zach has 6 user stories. 
         -Blue signs on the left bottom corner of each card is the estimated point for that user story. 
