@@ -10,7 +10,7 @@ Websites
 
 - [Our Planning Page](http://teamhortons.wikidot.com/planning)
     * It contains the details of three personas. You can also check user stories for each persona by clicking "Scrum Board".
-    * Video of our team playing planning game posted on the youtube, there is a link provided under "Video of part of our Scrum meeting".
+    * Video of our team playing planning game is embed on the website".
     * Burdown Chart, Summary Stats and System Diagram are provided at the bottom of this page.
 
 
