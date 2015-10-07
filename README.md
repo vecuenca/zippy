@@ -4,8 +4,9 @@ Website:
 Team Hortons is currently using two websites
 1. Wikia
 	-Our Planning Page (http://teamhortons.wikidot.com/planning):
-		-It contains the details of three personas. There is a link to Trello at the end of this page, so you can also check user stories for each persona by clicking this link.
-		-Video of our team playing planning game posted on the youtube, there is a link provided on the bottom of this page.
+		-It contains the details of three personas. You can also check user stories for each persona by clicking "Scrum Board".
+		-Video of our team playing planning game posted on the youtube, there is a link provided under "Video of part of our Scrum meeting" section.
+        -Burdown Chart, Summary Stats and System Diagram are provided at the bottom of this page.
 
 
 2. Trello
