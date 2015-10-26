@@ -31,7 +31,7 @@ def deletelink(pkey):
 	closelink(file)
 	file = openlink('w')
 	for line in lines:
-		if line.split(";")[0] != pkey:
+		if (line.split(";")[0] != pkey) and (line.split(";")[1].strip("\n") != pkey):
 			file.write(line)
 	closelink(file)
 	
@@ -76,25 +76,3 @@ def synchloop(list1, list2):
 				synchloop(list1[i], list2[i])
 			else:
 				list1[i] = list2[i]
-
-#synchloop(pitem, gitem)
-#gitem['data']['creators'] = {'creatorType': 'author', 'firstName': 'Daniel', 'lastName': 'Katz'}
-#print gitem['data']['creators']
-#synchdata("8A9ACPGR", "UIQP4DH5", "personal")
-pzot = zotero.Zotero("2721501", "user", "OLjjhuLwrV9yXXhg3E2Vioo9")
-gzot = zotero.Zotero("421041", "group", "OLjjhuLwrV9yXXhg3E2Vioo9")
-print search("UIQP4DH5", gzot)
-#synchitems("https://api.zotero.org/users/2721501/items/8A9ACPGR", "https://api.zotero.org/groups/421041/items/UIQP4DH5", "group")
-#zotpersonal = zotero.Zotero("2721501", "user", "OLjjhuLwrV9yXXhg3E2Vioo9")
-#zotgroup = zotero.Zotero("421041", "group", "OLjjhuLwrV9yXXhg3E2Vioo9")
-#items = zotpersonal.top(limit=5)
-# we've retrieved the latest five top-level items in our library
-# we can print each item's item type and ID
-#count = 0
-#for item in items:
-	#zotpersonal.item['data']['title'] = 'lmao changed'
-	#createlink(item["data"]["key"], zotgroup.items()[count]["data"]["key"])
-	#count += 1
-	#createlink("sdfsdfsadf", "dsafadsf")
-    #print('Item: %s | Key: %s') % (item['data']['itemType'], item['data']['key'])
-    #updated = zot.add_tags(item, "tag", "tag666", "cherry")
