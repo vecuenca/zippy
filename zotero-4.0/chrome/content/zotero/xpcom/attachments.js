@@ -125,6 +125,10 @@ Zotero.Attachments = new function(){
 	
 	function linkFromFile(file, sourceItemID){
 		Zotero.debug('Linking attachment from file');
+		alert("sdadsa");
+
+		Zotero.Notifier.trigger('link', 'item', sourceItemID);
+
 		
 		var title = file.leafName;
 		var mimeType = Zotero.MIME.getMIMETypeFromFile(file);
@@ -134,7 +138,7 @@ Zotero.Attachments = new function(){
 		
 		// Determine charset and build fulltext index
 		_postProcessFile(itemID, file, mimeType);
-		
+
 		return itemID;
 	}
 	
@@ -315,6 +319,10 @@ Zotero.Attachments = new function(){
 						
 						Zotero.Notifier.trigger('add', 'item', itemID);
 						Zotero.Notifier.trigger('modify', 'item', sourceItemID);
+						Zotero.debug('========================================cccccccccccccc');
+						alert("fkkkkk it");
+						Zotero.Notifier.trigger('link', 'item', sourceItemID);
+
 				
 						if(callback) callback(attachmentItem);
 						

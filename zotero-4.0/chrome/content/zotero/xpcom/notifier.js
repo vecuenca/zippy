@@ -241,7 +241,7 @@ Zotero.Notifier = new function(){
 		var order = ['collection', 'search', 'item', 'collection-item', 'item-tag', 'tag'];
 		_queue.sort();
 		
-		var order = ['add', 'modify', 'remove', 'move', 'delete', 'trash'];
+		var order = ['add', 'modify', 'remove', 'link', 'move', 'delete', 'trash'];
 		var totals = '';
 		for (var type in _queue) {
 			if (!runQueue[type]) {

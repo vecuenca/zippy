@@ -4035,6 +4035,9 @@ Zotero.Item.prototype.removeAllTags = function() {
 	Zotero.Tags.purge();
 	Zotero.DB.commitTransaction();
 	Zotero.Notifier.trigger('modify', 'item', this.id);
+	Zotero.debug('lllllllllllllllllllllllll')
+	Zotero.Notifier.trigger('link', 'item', this.id);
+
 	
 	for (var i in tagIDs) {
 		tagIDs[i] = this.id + '-' + tagIDs[i];
