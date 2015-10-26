@@ -92,9 +92,15 @@ Zotero.HelloWorldZotero = {
 					titles.join("\n");
 			}
 			
-			var ps = Components.classes["@mozilla.org/embedcomp/prompt-service;1"]
-				.getService(Components.interfaces.nsIPromptService);
-			ps.alert(null, "", str);
+				var ps = Components.classes["@mozilla.org/embedcomp/prompt-service;1"]
+						.getService(Components.interfaces.nsIPromptService);
+
+		//		ps.alert(null, "something", str);
+
+				var check = {value: true};                   // default the checkbox to true
+
+				var result = ps.confirmCheck(null, "Title of this Dialog", "Are you sure?",
+                                  null, check);
 		}
 	}
 };
