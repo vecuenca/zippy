@@ -1,0 +1,5 @@
+content	zippy				chrome/content/zippy/
+locale	zippy	en-US		chrome/locale/en-US/zippy/
+skin	zippy	default		chrome/skin/default/zippy/
+
+overlay	chrome://zotero/content/zoteroPane.xul	chrome://zippy/content/overlay.xul
