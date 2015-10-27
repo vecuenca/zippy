@@ -1,6 +1,6 @@
 # ZIPpy
 ZIPpy (Zotero Improvement Package, using Python) is a plugin for Zotero built by the CSCC01 team Team Hortons.
-Our plugin aims to improve the Zotero user experience by implementing the following:
+Our plugin aims to improve the Zotero user experience by implementing the following features:
 
 * Syncing records that live in personal libraries and group libraries
 * Introducing custom form builders
