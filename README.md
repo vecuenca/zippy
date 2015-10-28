@@ -6,6 +6,10 @@ Our plugin aims to improve the Zotero user experience by implementing the follow
 * Introducing custom form builders
 * Giving the user the ability to batch edit tags
 
+As of the time of writing, we have only begun to implement syncing records between personal and group libraries.
+
+Keep checking back for more updates to ZIPpy!
+
 # How to install
 1. Clone this repository
 2. Navigate to the 'zippy' folder
