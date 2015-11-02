@@ -10,13 +10,6 @@
 			src="chrome://zippy/locale/zippy.properties"/>
 	</stringbundleset>
 	
-	<menupopup id="zotero-tb-actions-popup">
-		<!-- Make sure the menu separator for utilities is visible -->
-		<menuseparator id="zotero-tb-actions-plugins-separator" hidden="false"/>
-		<menuitem insertbefore="zotero-tb-actions-separator" label="&zippyzotero.name;"
-			oncommand="Zotero.ZippyZotero.insertHello()"/>
-	</menupopup>
-
 	<menupoup id="zotero-itemmenu">
 		<menuseparator id="zotero-itemmenu-plugins-separator" hidden="false"/>
 		<menuitem insertbefore="zotero-itemmenu-plugins-separator" label="&zippyzotero.moveSyncContextButton;" oncommand="Zotero.ZippyZotero.moveAndSync()"/>
