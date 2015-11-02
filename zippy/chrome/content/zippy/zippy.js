@@ -4,12 +4,17 @@ Zotero.ZippyZotero = {
 	init: function () {
 		// Connect to (and create, if necessary) helloworld.sqlite in the Zotero directory
 		this.DB = new Zotero.DBConnection('helloworld');
+		this.zipDB = new Zotero.DBConnection('zippy');
 		
 		if (!this.DB.tableExists('changes')) {
 			this.DB.query("CREATE TABLE changes (num INT)");
 			this.DB.query("INSERT INTO changes VALUES (0)");
 		}
 		
+		if (!this.zipDB.tableExists('links')) {
+			this.zipDB.query("CREATE TABLE links (num INT)");
+			this.zipDB.query("INSERT INTO links VALUES (0)");
+		}
 		// Register the callback in Zotero as an item observer
 		var notifierID = Zotero.Notifier.registerObserver(this.notifierCallback, ['item']);
 		
@@ -18,7 +23,28 @@ Zotero.ZippyZotero = {
 				Zotero.Notifier.unregisterObserver(notifierID);
 		}, false);
 	},
-	
+
+
+	moveAndSync: function() {
+
+	},
+
+	// For now: sync personal -> group, figure out the other way later
+	syncRecords: function(personalRecord, groupRecord) {
+		Zotero.DB.beginTransaction();
+
+
+
+
+
+
+
+	},
+
+	moveRecord: function(record, targetLibraryId) {
+
+	},
+
 	insertHello: function() {
 		var data = {
 			title: "Zotero",

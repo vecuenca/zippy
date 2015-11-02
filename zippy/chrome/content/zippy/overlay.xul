@@ -16,6 +16,11 @@
 		<menuitem insertbefore="zotero-tb-actions-separator" label="&zippyzotero.name;"
 			oncommand="Zotero.ZippyZotero.insertHello()"/>
 	</menupopup>
+
+	<menupoup id="zotero-itemmenu">
+		<menuseparator id="zotero-itemmenu-plugins-separator" hidden="false"/>
+		<menuitem insertbefore="zotero-itemmenu-plugins-separator" label="&zippyzotero.moveSyncContextButton;" oncommand="Zotero.ZippyZotero.moveAndSync()"/>
+	</menupoup>
 	
 	<!-- Include the main extension logic -->
 	<script src="chrome://zotero/content/include.js"/>
