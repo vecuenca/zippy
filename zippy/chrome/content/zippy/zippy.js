@@ -24,21 +24,33 @@ Zotero.ZippyZotero = {
 		}, false);
 	},
 
-
 	moveAndSync: function() {
+		var prompts = Components.classes["@mozilla.org/embedcomp/prompt-service;1"]
+					.getService(Components.interfaces.nsIPromptService);		
 
+		var groupObjs = Zotero.Groups.getAll();
+		var groups = [];
+		Zotero.debug(groupObjs);
+
+		for (i = 0; i < groupObjs.length; i++) {
+			groups.push(groupObjs[i].name);
+		}
+
+		var selected = {};
+
+		var result = prompts.select(null, "Move and Sync Item", "Which group would you like to move and sync to?",
+			groups.length, groups, selected);
+		
+		//groups[selected.value]
+
+		if (result) {
+			//Move and sync
+		}
 	},
 
 	// For now: sync personal -> group, figure out the other way later
 	syncRecords: function(personalRecord, groupRecord) {
 		Zotero.DB.beginTransaction();
-
-
-
-
-
-
-
 	},
 
 	moveRecord: function(record, targetLibraryId) {
