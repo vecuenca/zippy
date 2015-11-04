@@ -6,9 +6,9 @@ Zotero.ZippyZotero = {
 		this.DB = new Zotero.DBConnection('zippy');		
 		
 		if (!this.DB.tableExists('links')) {
-			this.DB.query("CREATE TABLE links (num INT)");
-			this.DB.query("INSERT INTO links VALUES (0)");
+			this.DB.query("CREATE TABLE links (id varchar(255), link varchar(255))");
 		}
+		
 		// Register the callback in Zotero as an item observer
 		var notifierID = Zotero.Notifier.registerObserver(this.notifierCallback, ['item']);
 		
@@ -16,7 +16,7 @@ Zotero.ZippyZotero = {
 		window.addEventListener('unload', function(e) {
 				Zotero.Notifier.unregisterObserver(notifierID);
 		}, false);
-	},
+	},	
 
 	moveAndSync: function() {
 		var prompts = Components.classes["@mozilla.org/embedcomp/prompt-service;1"]
@@ -37,16 +37,18 @@ Zotero.ZippyZotero = {
 		// User selected a group to move & sync to
 		if (result) {
 			var items = ZoteroPane.getSelectedItems();
-			Zotero.debug(groups);
-			
+			Zotero.debug(groups);			
 			
 			for (i = 0; i < items.length; i++) {
-				// id of copied item is different
-				var id = Zotero.ZippyZotero.copyItem(items[i], groupObjs[selected.value].libraryID);				
-				Zotero.debug("Record: " + items[i].id + " " + id);
+				var item = items[i];
+
+				var newId = this.copyItem(item, groupObjs[selected.value].libraryID);				
+				Zotero.debug("Record: " + item.id + " " + newId);
+
+				//Update DB to reflect new link
+				this.DB.query("INSERT INTO links (id, link) VALUES (" + item.id + "," + newId + ")");
 			}
 
-			//Update DB to reflect new link
 		}
 	},
 
