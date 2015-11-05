@@ -15,17 +15,18 @@
 		<menuitem insertbefore="zotero-itemmenu-plugins-separator" label="&zippyzotero.moveSyncContextButton;" oncommand="Zotero.ZippyZotero.moveAndSync()"/>
 	</menupoup>
 
+	
 	<tabpanel>
 	<hbox align="center">
-		<label id="zotero-editpane-notes-label2"/>
-		<button id="zotero-editpane-notes-add2" label="&zippyzotero.tagMergeButton;" oncommand="Zotero.ZippyZotero.mergeTags();"/>
+		<label id="zotero-editpane-tags-merge-label"/>
+		<button id="zotero-editpane-tags-merge" label="&zippyzotero.tagMergeButton;" oncommand="Zotero.ZippyZotero.mergeTags();"/>
 	</hbox>
 	<hbox align="center">
-		<label id="zotero-editpane-notes-label2"/>
-		<button id="zotero-editpane-notes-add2" label="&zippyzotero.tagDeleteButton;" oncommand="Zotero.ZippyZotero.deleteTags();"/>
+		<label id="zotero-editpane-tags-delete-label"/>
+		<button id="zotero-editpane-tags-delete" label="&zippyzotero.tagDeleteButton;" oncommand="Zotero.ZippyZotero.deleteTags();"/>
 	</hbox>
 	</tabpanel>
-	
+
 	<!-- Include the main extension logic -->
 	<script src="chrome://zotero/content/include.js"/>
 	<script src="chrome://zippy/content/include.js" type="application/javascript;version=1.8"/>
