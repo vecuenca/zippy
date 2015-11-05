@@ -1,1 +1,5 @@
 <!ENTITY zippyzotero.name			"Hello World">
+<!ENTITY zippyzotero.moveSyncContextButton			"Move and Sync Item">
+<!ENTITY zippyzotero.tagDeleteButton			"Delete">
+<!ENTITY zippyzotero.tagMergeButton			"Merge">
+
