@@ -11,6 +11,7 @@ Zotero.ZippyZotero = {
 
 		var links = this.DB.query("SELECT * FROM links;");
 		Zotero.debug(links);
+		Zotero.debug("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
 
 		// Register the callback in Zotero as an item observer
 		var notifierID = Zotero.Notifier.registerObserver(this.notifierCallback, ['item']);
@@ -221,10 +222,12 @@ Zotero.ZippyZotero = {
 				for each(var item in items) {
 					// check if item.id is in links table
 					/*var syncedItems = Zotero.ZippyZotero.DB.query("SELECT link FROM links WHERE id='" + item.id + "';");*/
+					/*var syncedItems = Zotero.ZippyZotero.DB.query("SELECT link FROM links WHERE id='32';");*/
 					var syncedItems = Zotero.ZippyZotero.DB.query("SELECT * FROM links;");
+					var syncedItems = this.DB.query("SELECT * FROM links;");
 
 					if (syncedItems.length) {
-						Zotero.debug("@@@" + syncedItems);
+						Zotero.debug(syncedItems);
 
 						// Update
 					} else {
