@@ -8,15 +8,20 @@
   buttonlabelcancel="Exit"
   ondialogcancel="return doCancel();">
 
-  <groupbox>
+  <groupbox id="gb">
     <hbox>
       <label value="Search tags:" control="find-tag"/>
-      <textbox id="find-tag" type="search"/>
+      <textbox id="find-tag" type="search" oncommand="document.getBindingParent(this).handleKeyPress(); event.stopPropagation()"
+              onkeypress="if (event.keyCode == event.DOM_VK_ESCAPE) { document.getBindingParent(this).handleKeyPress(true); }"/>
     </hbox>
-    <script>
-	  function addItem(){
-  	  document.getElementById('tagsList').appendItem("tag3", "tag4");}
-	</script>
+    <row>
+    <button label="Delete"
+          oncommand="loop(window.arguments[1]);"/>
+      <button label="Merge"
+          oncommand="enterMergeTag();"/>
+      <button label="Select All"
+          oncommand="alert('You select all tags!');"/>
+    </row>
 	<richlistbox 
 		id="tagsList" flex="1" style="overflow: auto">
 	  <listhead>
@@ -31,15 +36,8 @@
           checklist.appendChild(check);        
         }
       </script>
-	</richlistbox>
-    <row>
-		<button label="Delete"
-        	oncommand="loop(window.arguments[1]);"/>
-    	<button label="Merge"
-        	oncommand="enterMergeTag();"/>
-    	<button label="Select All"
-        	oncommand="alert('You select all tags!');"/>
-    </row>
+	 </richlistbox>
+    
 
   </groupbox>
 
