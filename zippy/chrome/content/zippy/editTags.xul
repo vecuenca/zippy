@@ -22,12 +22,15 @@
 	  <listhead>
         <listheader fill="search-tags-result" label="Select Tags" hidden="false"/>        
       </listhead>
-        <checkbox label="tag1" checked="true"/>
-	      <checkbox label="tag2" checked="true"/>
-	      <checkbox label="tag3" checked="true"/>
-	      <checkbox label="tag4" checked="true"/>
-	      <checkbox label="tag5" checked="true"/>
-	      <checkbox label="tag6" checked="true"/>
+      <script>
+        var checklist = document.getElementById('tagsList');
+        for (var key in window.arguments[1]) {
+          var tagadd = window.arguments[1][key]['_name'];
+          var check = document.createElement('checkbox');
+          check.setAttribute('label', tagadd );
+          checklist.appendChild(check);        
+        }
+      </script>
 	</richlistbox>
     <row>
 		<button label="Delete"
