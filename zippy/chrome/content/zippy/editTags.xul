@@ -41,11 +41,7 @@
   </groupbox>
 
   <script>
-	function doOK(){
-  		alert("You pressed OK!");
-  		return true;
-	}
-
+  
 	function doCancel(){
   		return true;
 	}
