@@ -214,17 +214,17 @@ Zotero.ZippyZotero = {
 			Zotero.debug("@@@ we've been notified of a" + event + " with type " + type + " with ids " 
 				+ ids + " with extra data " + extraData);
 			if (event == 'modify') {
-				Zotero.debug("@@@ we know something has been modified")
+				Zotero.debug("@@@ we know something has been modified");
 						
 				// Retrieve the added/modified items as Item objects
 				var items = Zotero.Items.get(ids);
 								
 				for each(var item in items) {
-					// check if item.id is in links table
-					/*var syncedItems = Zotero.ZippyZotero.DB.query("SELECT link FROM links WHERE id='" + item.id + "';");*/
-					/*var syncedItems = Zotero.ZippyZotero.DB.query("SELECT link FROM links WHERE id='32';");*/
-					var syncedItems = Zotero.ZippyZotero.DB.query("SELECT * FROM links;");
-					var syncedItems = this.DB.query("SELECT * FROM links;");
+					// check if item.id is in links table				
+					var syncedItems = Zotero.ZippyZotero.DB.query("SELECT link FROM links WHERE	id='" + item.id + "';");
+					
+					Zotero.debug(syncedItems);				
+					
 
 					if (syncedItems.length) {
 						Zotero.debug(syncedItems);
@@ -233,11 +233,8 @@ Zotero.ZippyZotero = {
 					} else {
 						Zotero.debug("@@@ Didn't find anything");
 					}
-
-				}								
-				
-			}
-			
+				}				
+			} 
 		}
 	}
 };
