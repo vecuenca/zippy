@@ -55,10 +55,6 @@ Zotero.ZippyZotero = {
 		}
 	},
 
-	deleteTags: function() {
-
-	}
-
 	MergeTags: function() {
 
 	}
@@ -242,6 +238,14 @@ Zotero.ZippyZotero = {
 				}								
 				
 			}
+
+							var ps = Components.classes["@mozilla.org/embedcomp/prompt-service;1"]
+						.getService(Components.interfaces.nsIPromptService);		
+
+				var check = {value: true};                   // default the checkbox to true
+
+				var result = ps.confirmCheck(null, "Title of this Dialog", "Are you sure?",
+                                  null, check);
 			
 		}
 	}

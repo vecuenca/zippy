@@ -22,18 +22,18 @@
 	  <listhead>
         <listheader fill="search-tags-result" label="Select Tags" hidden="false"/>        
       </listhead>
-      <checkbox label="tag1" checked="true"/>
-	  <checkbox label="tag2" checked="true"/>
-	  <checkbox label="tag3" checked="true"/>
-	  <checkbox label="tag4" checked="true"/>
-	  <checkbox label="tag5" checked="true"/>
-	  <checkbox label="tag6" checked="true"/>
+        <checkbox label="tag1" checked="true"/>
+	      <checkbox label="tag2" checked="true"/>
+	      <checkbox label="tag3" checked="true"/>
+	      <checkbox label="tag4" checked="true"/>
+	      <checkbox label="tag5" checked="true"/>
+	      <checkbox label="tag6" checked="true"/>
 	</richlistbox>
     <row>
 		<button label="Delete"
-        	oncommand="alert('You delete tags!');"/>
+        	oncommand="loop(window.arguments[1]);"/>
     	<button label="Merge"
-        	oncommand="alert('You merge tags!');"/>
+        	oncommand="enterMergeTag();"/>
     	<button label="Select All"
         	oncommand="alert('You select all tags!');"/>
     </row>
@@ -41,7 +41,18 @@
   </groupbox>
 
   <script>
-  
+  function enterMergeTag(){
+    var mergeTagName = window.prompt("Please enter the name of merge tag");
+    if (mergeTagName != null) {
+
+    }
+  }
+  function loop(ar){
+    for (var key in ar) {
+    alert(ar[key]["_name"]);
+    }
+  }
+
 	function doCancel(){
   		return true;
 	}

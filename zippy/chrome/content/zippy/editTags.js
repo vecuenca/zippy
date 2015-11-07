@@ -1,8 +1,9 @@
 Zotero.ZippyEditTags = {
 
-	MergeTags: function() {
+	EditMultipleTags: function() {
 		var somefile=document.getElementById('zippy-zotero-strings').value;
-		window.openDialog("chrome://zippy/content/editTags.xul","editAllTags", "chrome",somefile);
+		var all_tags = Zotero.Tags.getAll();
+		window.openDialog("chrome://zippy/content/editTags.xul","editAllTags", "chrome",somefile, all_tags);
 	}
 
 }
