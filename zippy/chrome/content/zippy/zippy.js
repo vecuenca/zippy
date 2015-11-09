@@ -43,7 +43,6 @@
 					var item = items[i];
 
 					var newId = this.copyItem(item, groupObjs[selected.value].libraryID);
-					Zotero.debug("Record: " + item.id + " " + newId);
 
 					//Update DB to reflect new link
 					this.DB.query("INSERT INTO links (id, link) VALUES (" + item.id + "," + newId + ")");
