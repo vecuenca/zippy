@@ -1,6 +1,7 @@
 Zotero.ZippyEditTagsWindow = {
 
-	EditTagsWin: function(tags) {
+	EditTagsWin: function() {
+    var tags = Zotero.Tags.getAll();
 		var tagIDs = [];
 		var checklist = document.getElementById('tagsList');
     	for (var key in tags) {
