@@ -58,7 +58,7 @@
 			 * TODO: This is really ugly. stick some of this code in helper methods?
 			 */
 			notify: function(event, type, ids, extraData) {
-				if (event == "modify") {
+				if (event == "modify" && type = "item") {
 					// Retrieve the added/modified items as Item objects
 					var items = Zotero.Items.get(ids);
 					if (items.length) {
@@ -67,8 +67,8 @@
 							var linkedItems = Zotero.ZippyZotero.DB.query("SELECT link FROM links WHERE	id='" + items[i].id + "';");
 							if (linkedItems.length) {
 								// Go through linked items, propagate each changed field to the linked item
-								for (var i = 0; i < linkedItems.length; i++) {
-									var linkedItem = Zotero.Items.get(linkedItems[i].link);
+								for (var j = 0; j < linkedItems.length; j++) {
+									var linkedItem = Zotero.Items.get(linkedItems[j].link);
 									for (var id in extraData) {
 										for(var field in extraData[id].changed) {
 											if (extraData[id].changed.hasOwnProperty(field)) {
