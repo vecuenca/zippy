@@ -59,7 +59,7 @@
 			 * TODO: This is really ugly. stick some of this code in helper methods?
 			 */
 			notify: function(event, type, ids, extraData) {
-				if (event == "modify" && type = "item") {
+				if (event == "modify" && type == "item") {
 					// Retrieve the added/modified items as Item objects
 					var items = Zotero.Items.get(ids);
 					if (items.length) {
@@ -90,8 +90,8 @@
 						var newTag = Zotero.Tag.get(ids[i]);
 						var tagItems = Zotero.Tags.getTagItems(ids[i]); // array of item ids
 						for (var j = 0; j < tagItems.length; j++) {
-							var linkedItems = Zotero.ZippyZotero.DB.query("SELECT link FROM links WHERE	id='"
-								+ tagItems[j].id + "';");
+							var linkedItems = Zotero.ZippyZotero.DB.query("SELECT link FROM links WHERE	id='" +
+								tagItems[j].id + "';");
 							for (var k = 0; k < linkedItems.length; k++) {
 								newTag.addItem(linkedItems[k].id);
 							}
