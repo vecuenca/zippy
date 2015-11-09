@@ -19,6 +19,10 @@
 			}, false);
 		},
 
+		/**
+		 * Called when the user selects 'Move and Sync' from an item context menu.
+		 * Moves the selected item to the selected group, and sets up the link in our local DB.
+		 */
 		moveAndSync: function() {
 			var prompts = Components.classes["@mozilla.org/embedcomp/prompt-service;1"]
 						.getService(Components.interfaces.nsIPromptService);
@@ -35,16 +39,13 @@
 			var result = prompts.select(null, "Move and Sync Item", "Which group would you like to move and sync to?",
 				groups.length, groups, selected);
 
-			// User selected a group to move & sync to
+			// The user did in fact select a group to move & sync to
 			if (result) {
 				var items = ZoteroPane.getSelectedItems();
 
 				for (i = 0; i < items.length; i++) {
 					var item = items[i];
-
 					var newId = this.copyItem(item, groupObjs[selected.value].libraryID);
-
-					//Update DB to reflect new link
 					this.DB.query("INSERT INTO links (id, link) VALUES (" + item.id + "," + newId + ")");
 				}
 			}
@@ -81,6 +82,18 @@
 										}
 									}
 								}
+							}
+						}
+					}
+				} else if (event == "add" && type == "tag") {
+					for (var i = 0; i < ids.length; i++) {
+						var newTag = Zotero.Tag.get(ids[i]);
+						var tagItems = Zotero.Tags.getTagItems(ids[i]); // array of item ids
+						for (var j = 0; j < tagItems.length; j++) {
+							var linkedItems = Zotero.ZippyZotero.DB.query("SELECT link FROM links WHERE	id='"
+								+ tagItems[j].id + "';");
+							for (var k = 0; k < linkedItems.length; k++) {
+								newTag.addItem(linkedItems[k].id);
 							}
 						}
 					}
