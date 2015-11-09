@@ -30,12 +30,22 @@ Zotero.ZippyMergeTagsWindow = {
           var garbage = checklist.removeChild(checkbox);
         }
       }
+
+      var all_tags = Zotero.Tags.getAll();
+      for (var ntag in all_tags) {
+        var tagaddn = tags[ntag]['_id'];
+        if (tagIDs.indexOf(tagaddn) == -1) {
+                var newtagID = tagaddn;
+                break;
+      }
+    }
+
       var addcheck = document.createElement('checkbox');
       addcheck.setAttribute('label', input[key] );
+      addcheck.setAttribute('id', newtagID );
       checklist.appendChild(addcheck);
-
-    }
     
 	}
+}
 
 }
