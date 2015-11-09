@@ -11,21 +11,14 @@
   <groupbox id="gb">
     <row>
     <hbox>
-      <label value="Select Tag:     " control="select-tag"/>
-      <textbox id="select-tag"/>
+      <label value="Enter tag name:     " control="enter-tag"/>
+      <textbox id="enter-tag"/>
     </hbox>
       <button label="select"
           oncommand="selectTags();"/>
-    </row>  
-
-    <row>
-    <hbox>
-      <label value="Deselect Tag:" control="deselect-tag"/>
-      <textbox id="deselect-tag"/>
-    </hbox>
       <button label="deselect"
           oncommand="deselectTags();"/>
-    </row> 
+    </row>  
 
     <row>
       <button label="Delete"
@@ -98,7 +91,7 @@
   }
 
   function selectTags(){
-  var inputval=document.getElementById("select-tag").value;
+  var inputval=document.getElementById("enter-tag").value;
   var newTags = window.arguments[1];
   var find=false;
   for (var each in newTags) {
@@ -117,7 +110,7 @@
   }
 
   function deselectTags(){
-  var inputval=document.getElementById("deselect-tag").value;
+  var inputval=document.getElementById("enter-tag").value;
   var newTags = window.arguments[1];
   var find=false;
   for (var each in newTags) {
