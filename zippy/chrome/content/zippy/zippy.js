@@ -10,8 +10,8 @@
 				this.DB.query("CREATE TABLE links (id varchar(255), link varchar(255))");
 			}
 
-			// Register the callback in Zotero as an item observer
-			var notifierID = Zotero.Notifier.registerObserver(this.notifierCallback, ["item"]);
+			// Register the callback in Zotero as an item and tag observer
+			var notifierID = Zotero.Notifier.registerObserver(this.notifierCallback, ["item", "tag"]);
 
 			// Unregister callback when the window closes (important to avoid a memory leak)
 			window.addEventListener("unload", function(e) {
@@ -56,7 +56,7 @@
 			/**
 			 * This callback propagates changes to linked items when items are modified,
 			 * and updates links when items are deleted.
-			 * TODO: stick some of this code in helper methods?
+			 * TODO: This is really ugly. stick some of this code in helper methods?
 			 */
 			notify: function(event, type, ids, extraData) {
 				if (event == "modify") {
