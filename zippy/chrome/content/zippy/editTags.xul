@@ -12,16 +12,15 @@
     <row>
     <hbox>
       <label value="Search tags:" control="find-tag"/>
-      <textbox id="find-tag" type="search" oncommand="document.getBindingParent(this).handleKeyPress(); event.stopPropagation()"
-              onkeypress="if (event.keyCode == event.DOM_VK_ESCAPE) { document.getBindingParent(this).handleKeyPress(true); }"/>
+      <textbox id="find-tag" type="search" value=""/>
     </hbox>
       <button label="Search"
-          oncommand="searchTags();"/>
+          oncommand="Zotero.ZippySearchTagsWindow.SearchTagsWin();"/>
     </row>    
 
     <row>
       <button label="Delete"
-          oncommand="Zotero.ZippyEditTagsWindow.EditTagsWin(window.arguments[1]);"/>
+          oncommand="Zotero.ZippyEditTagsWindow.EditTagsWin();"/>
       <button label="Merge"
           oncommand="enterMergeTag();"/>
       <button label="Select All"
@@ -64,8 +63,7 @@
     var result = prompts.prompt(null, "Merge Tag", "Please enter the name of merge tag:", input, null, check);
 
     if (result){
-
-    Zotero.ZippyMergeTagsWindow.MergeTagsWin(window.arguments[1], input);
+    Zotero.ZippyMergeTagsWindow.MergeTagsWin(input);
 
     }
   } 
@@ -73,8 +71,9 @@
 
 
   function selectAllTags(){
-  for (var key in window.arguments[1]) {
-    var tagadd = window.arguments[1][key]['_id'];
+  var tags = Zotero.Tags.getAll();
+  for (var key in tags) {
+    var tagadd = tags[key]['_id'];
     var checkTag = document.getElementById(tagadd).checked = true;
   }
 
@@ -82,8 +81,9 @@
 
 
   function DeselectAllTags(){
-    for (var key in window.arguments[1]) {
-    var tagadd = window.arguments[1][key]['_id'];
+  var tags = Zotero.Tags.getAll();
+    for (var key in tags) {
+    var tagadd = tags[key]['_id'];
     var checkTag = document.getElementById(tagadd).checked = false;
   }
   }
@@ -99,10 +99,11 @@
 </script>
 
 <!-- Include the main extension logic -->
-  <script src="chrome://zotero/content/include.js"/>
+  <script src="chrome://zippy/content/include.js"/>
   <script src="chrome://zippy/content/editTags.js"/>
-  <script src="chrome://zippy/content/include.js" type="application/javascript;version=1.8"/>
+  <script src="chrome://zotero/content/include.js" type="application/javascript;version=1.8"/>
   <script src="chrome://zippy/content/editTagsWindow.js"/>
   <script src="chrome://zippy/content/mergeTagsWindow.js"/>
+  <script src="chrome://zippy/content/searchTagsWindow.js"/>
 
 </dialog>
