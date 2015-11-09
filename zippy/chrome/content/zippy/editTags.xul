@@ -11,12 +11,21 @@
   <groupbox id="gb">
     <row>
     <hbox>
-      <label value="Search tags:" control="find-tag"/>
-      <textbox id="find-tag" type="search" value=""/>
+      <label value="Select Tag:     " control="select-tag"/>
+      <textbox id="select-tag"/>
     </hbox>
-      <button label="Search"
-          oncommand="Zotero.ZippySearchTagsWindow.SearchTagsWin();"/>
-    </row>    
+      <button label="select"
+          oncommand="selectTags();"/>
+    </row>  
+
+    <row>
+    <hbox>
+      <label value="Deselect Tag:" control="deselect-tag"/>
+      <textbox id="deselect-tag"/>
+    </hbox>
+      <button label="deselect"
+          oncommand="deselectTags();"/>
+    </row> 
 
     <row>
       <button label="Delete"
@@ -30,9 +39,9 @@
     </row>
 
     
-	<richlistbox 
-		id="tagsList" flex="1" style="overflow: auto">
-	  <listhead>
+  <richlistbox 
+    id="tagsList" flex="1" style="overflow: auto">
+    <listhead>
         <listheader fill="search-tags-result" label="Select Tags" hidden="false"/>        
       </listhead>
       <script>
@@ -46,7 +55,7 @@
 
         }
       </script>
-	 </richlistbox>
+   </richlistbox>
     
 
   </groupbox>
@@ -88,13 +97,46 @@
   }
   }
 
-  function searchTags(){
+  function selectTags(){
+  var inputval=document.getElementById("select-tag").value;
+  var newTags = window.arguments[1];
+  var find=false;
+  for (var each in newTags) {
+    if (newTags[each]['_name']==inputval) {
+      var newID=newTags[each]['_id']
+      find=true;
+    }
+  }
+  if(find){
+  var checkTag = document.getElementById(newID).checked = true;
+  }
+  else{
+    alert("Tag not found.");
+  }
   
   }
 
-	function doCancel(){
-  		return true;
-	}
+  function deselectTags(){
+  var inputval=document.getElementById("deselect-tag").value;
+  var newTags = window.arguments[1];
+  var find=false;
+  for (var each in newTags) {
+    if (newTags[each]['_name']==inputval) {
+      var newID=newTags[each]['_id']
+      find=true;
+    }
+  }
+  if(find){
+  var checkTag = document.getElementById(newID).checked = false;
+  }
+  else{
+    alert("Tag not found.");
+  }  
+  }
+
+  function doCancel(){
+      return true;
+  }
 
 </script>
 
