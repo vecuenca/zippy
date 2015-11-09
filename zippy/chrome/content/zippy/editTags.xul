@@ -7,7 +7,7 @@
   buttons="cancel"
   buttonlabelcancel="Exit"
   ondialogcancel="return doCancel();">
-
+  <vbox flex="1" style="overflow:auto">
   <groupbox id="gb">
     <row>
     <hbox>
@@ -48,8 +48,8 @@
       </script>
 	 </richlistbox>
     
-
   </groupbox>
+   </vbox>
 
   <script>
   function enterMergeTag(){
