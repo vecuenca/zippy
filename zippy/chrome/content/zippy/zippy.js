@@ -103,6 +103,30 @@
 							}
 						}
 					}
+				} else if (event == "modify" && type == "tag") {
+					// When a tag is modified, a new tag is created to replace it
+					// extraData[0] contains the old tag id, extraData[1] has the new one
+
+					// Grab all the items the new tag belongs to
+					var oldTag = Zotero.Tags.get(ids[0]);
+					var modifiedTagID = ids[1];
+					var tagItems = Zotero.Tags.getTagItems(modifiedTagID);
+
+					for (var i = 0; i < tagItems.length; i++) {
+						var linkedItems = Zotero.ZippyZotero.DB.query("SELECT link FROM links WHERE	id='" +
+								tagItems[i] + "';");
+						if (linkedItems.length) {
+							for (var j = 0; j < linkedItems.length; j++) {
+								var linkedItem = Zotero.Items.get(linkedItems[j].link);
+								var linkedItemTags = linkedItem.getTags(); // returns array of tags
+								for (var k = 0; k < linkedItemTags; k++) {
+									if (linkedItemTags[k].name === oldTag.name) {
+										return;
+									}
+								}
+							}
+						}
+					}
 				}
 	 		}
 		},
