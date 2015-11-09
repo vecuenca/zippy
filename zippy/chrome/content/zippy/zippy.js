@@ -22,6 +22,8 @@
 		/**
 		 * Called when the user selects 'Move and Sync' from an item context menu.
 		 * Moves the selected item to the selected group, and sets up the link in our local DB.
+		 *(Find a werid bug, when we move and sync a item/collection, the new item we created comes with a tag, 
+		 *which we deleted before.)
 		 */
 		moveAndSync: function() {
 			var prompts = Components.classes["@mozilla.org/embedcomp/prompt-service;1"]
@@ -70,14 +72,19 @@
 								// Go through linked items, propagate each changed field to the linked item
 								for (var j = 0; j < linkedItems.length; j++) {
 									var linkedItem = Zotero.Items.get(linkedItems[j].link);
-									for (var id in extraData) {
-										for(var field in extraData[id].changed) {
-											if (extraData[id].changed.hasOwnProperty(field)) {
-												// I don;t know if getting this is necessary.. just to be safe perhaps?
-												var mappedFieldID = Zotero.ItemFields.getFieldIDFromTypeAndBase(linkedItem.itemTypeID, field);
-												var fieldID = Zotero.ItemFields.getID(field);
-												linkedItem.setField(mappedFieldID ? mappedFieldID : field, items[i].getField(field));
-												linkedItem.save();
+									//Zotero.ZippyZotero.DB.query("INSERT INTO links (id, link) VALUES (56,55)");
+									// if (linkedItem.deleted) {
+									// 	Zotero.ZippyZotero.DB.query("INSERT INTO links (id, link) VALUES (56,55)");
+									} else {
+										for (var id in extraData) {
+											for(var field in extraData[id].changed) {
+												if (extraData[id].changed.hasOwnProperty(field)) {
+													// I don;t know if getting this is necessary.. just to be safe perhaps?
+													var mappedFieldID = Zotero.ItemFields.getFieldIDFromTypeAndBase(linkedItem.itemTypeID, field);
+													var fieldID = Zotero.ItemFields.getID(field);
+													linkedItem.setField(mappedFieldID ? mappedFieldID : field, items[i].getField(field));
+													linkedItem.save();
+												}
 											}
 										}
 									}
@@ -97,8 +104,31 @@
 							}
 						}
 					}
+				} else {
+					/*This is the temporary way to go into event delete.
+					*Whenever we delete something in personal libraries, we break the link.
+					*/
+					var items = Zotero.Items.get(ids);
+					if (items.length) {
+						for (var i = 0; i < items.length; i++) {
+							Zotero.ZippyZotero.DB.query("DELETE FROM links WHERE id='" + items[i].id + "'");
+						}
+					}
+					//Zotero.ZippyZotero.DB.query("DELETE FROM links WHERE id=56");
+					// var items = Zotero.Items.get(ids);
+					// if (items.length) {
+					// 	for (var i = 0; i < items.length; i++) {
+					// 		Zotero.ZippyZotero.DB.query("DELETE FROM links WHERE id='" + items[i].id + "'");
+							// var linkedItems = Zotero.ZippyZotero.DB.query("SELECT link FROM links WHERE	id='" + items[i].id + "';");
+							// if (linkedItems.length) {
+							// 	for (var j = 0; j < linkedItems.length; j++) {
+							// 		Zotero.ZippyZotero.DB.query("DELETE FROM links WHERE id='" + item[i].id + "'");
+							// 	}
+							// }
+						// }
+					// }
 				}
-	 		}
+			}
 		},
 
 		// This is literally the same function from Zotero's collectionTreeView.js
