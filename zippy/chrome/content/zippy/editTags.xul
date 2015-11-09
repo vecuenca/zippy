@@ -45,7 +45,6 @@
           check.setAttribute('label', tagadd );
           check.setAttribute('id', window.arguments[1][key]['_id'] );
           checklist.appendChild(check);
-
         }
       </script>
    </richlistbox>
@@ -104,7 +103,10 @@
   var checkTag = document.getElementById(newID).checked = true;
   }
   else{
-    alert("Tag not found.");
+    var prompts = Components.classes["@mozilla.org/embedcomp/prompt-service;1"]
+                        .getService(Components.interfaces.nsIPromptService);
+
+    prompts.alert(null, "Tag Not Found", "The name of tag is not found.");
   }
   
   }
@@ -124,7 +126,10 @@
   var checkTag = document.getElementById(newID).checked = false;
   }
   else{
-    alert("Tag not found.");
+   var prompts = Components.classes["@mozilla.org/embedcomp/prompt-service;1"]
+                        .getService(Components.interfaces.nsIPromptService);
+
+    prompts.alert(null, "Tag Not Found", "The name of tag is not found.");
   }  
   }
 
