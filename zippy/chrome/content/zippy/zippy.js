@@ -87,13 +87,19 @@
 					}
 				} else if (event == "add" && type == "tag") {
 					for (var i = 0; i < ids.length; i++) {
-						var newTag = Zotero.Tag.get(ids[i]);
+						var newTag = Zotero.Tags.get(ids[i]);
 						var tagItems = Zotero.Tags.getTagItems(ids[i]); // array of item ids
 						for (var j = 0; j < tagItems.length; j++) {
 							var linkedItems = Zotero.ZippyZotero.DB.query("SELECT link FROM links WHERE	id='" +
-								tagItems[j].id + "';");
+								tagItems[j] + "';");
 							for (var k = 0; k < linkedItems.length; k++) {
-								newTag.addItem(linkedItems[k].id);
+								var linkedItem = Zotero.Items.get(linkedItems[k].link);
+								var dupTag = new Zotero.Tag;
+								dupTag.libraryID = linkedItem.libraryID;
+								dupTag.name = newTag.name;
+								dupTag.save();
+								// No save is necessary for tag operations
+								linkedItem.addTagByID(dupTag.id);
 							}
 						}
 					}
