@@ -3,7 +3,7 @@
 Zotero.ZippyZotero = {
 	DB: null,
 
-	init: function () {
+	init: function() {
 		// Connect to (and create, if necessary) zippy.sqlite in the Zotero directory
 		this.DB = new Zotero.DBConnection("zippy");
 
@@ -16,17 +16,21 @@ Zotero.ZippyZotero = {
 
 		// Unregister callback when the window closes (important to avoid a memory leak)
 		window.addEventListener("unload", function(e) {
-				Zotero.Notifier.unregisterObserver(notifierID);
+			Zotero.Notifier.unregisterObserver(notifierID);
 		}, false);
 	},
+
 
 	/**
 	 * Called when the user selects 'Move and Sync' from an item context menu.
 	 * Moves the selected item to the selected group, and sets up the link in our local DB.
+	 *(Find a werid bug, when we move and sync a item/collection, the new item we created comes with a tag, 
+	 *which we deleted before.)
 	 */
 	moveAndSync: function() {
 		var prompts = Components.classes["@mozilla.org/embedcomp/prompt-service;1"]
-					.getService(Components.interfaces.nsIPromptService);
+			.getService(Components.interfaces.nsIPromptService);
+
 
 		var groupObjs = Zotero.Groups.getAll();
 		var groups = [];
@@ -72,13 +76,14 @@ Zotero.ZippyZotero = {
 							for (var j = 0; j < linkedItems.length; j++) {
 								var linkedItem = Zotero.Items.get(linkedItems[j].link);
 								for (var id in extraData) {
-									for(var field in extraData[id].changed) {
+									for (var field in extraData[id].changed) {
 										if (extraData[id].changed.hasOwnProperty(field)) {
 											// I don;t know if getting this is necessary.. just to be safe perhaps?
 											var mappedFieldID = Zotero.ItemFields.getFieldIDFromTypeAndBase(linkedItem.itemTypeID, field);
 											var fieldID = Zotero.ItemFields.getID(field);
 											linkedItem.setField(mappedFieldID ? mappedFieldID : field, items[i].getField(field));
 											linkedItem.save();
+
 										}
 									}
 								}
@@ -115,21 +120,44 @@ Zotero.ZippyZotero = {
 
 				for (var i = 0; i < tagItems.length; i++) {
 					var linkedItems = Zotero.ZippyZotero.DB.query("SELECT link FROM links WHERE	id='" +
-							tagItems[i] + "';");
+						tagItems[i] + "';");
 					if (linkedItems.length) {
 						for (var j = 0; j < linkedItems.length; j++) {
 							var linkedItem = Zotero.Items.get(linkedItems[j].link);
 							var linkedItemTags = linkedItem.getTags(); // returns array of tags
 							for (var k = 0; k < linkedItemTags; k++) {
 								if (linkedItemTags[k].name === oldTag.name) {
-									Zotero.Tags.rename(linkedItemTags[k].id, modifiedTag.name)
+									Zotero.Tags.rename(linkedItemTags[k].id, modifiedTag.name);
 								}
 							}
 						}
 					}
 				}
+			} else {
+				/*This is the temporary way to go into event delete.
+				 *Whenever we delete something in personal libraries, we break the link.
+				 */
+				var items = Zotero.Items.get(ids);
+				if (items.length) {
+					for (var i = 0; i < items.length; i++) {
+						Zotero.ZippyZotero.DB.query("DELETE FROM links WHERE id='" + items[i].id + "'");
+					}
+				}
+				//Zotero.ZippyZotero.DB.query("DELETE FROM links WHERE id=56");
+				// var items = Zotero.Items.get(ids);
+				// if (items.length) {
+				// 	for (var i = 0; i < items.length; i++) {
+				// 		Zotero.ZippyZotero.DB.query("DELETE FROM links WHERE id='" + items[i].id + "'");
+				// var linkedItems = Zotero.ZippyZotero.DB.query("SELECT link FROM links WHERE	id='" + items[i].id + "';");
+				// if (linkedItems.length) {
+				// 	for (var j = 0; j < linkedItems.length; j++) {
+				// 		Zotero.ZippyZotero.DB.query("DELETE FROM links WHERE id='" + item[i].id + "'");
+				// 	}
+				// }
+				// }
+				// }
 			}
- 		}
+		}
 	},
 
 	// This is literally the same function from Zotero's collectionTreeView.js
@@ -268,8 +296,7 @@ Zotero.ZippyZotero = {
 						Zotero.debug("Skipping child link attachment on drag");
 						continue;
 					}
-				}
-				else {
+				} else {
 					if (!copyChildFileAttachments || !itemGroup.filesEditable) {
 						Zotero.debug("Skipping child file attachment on drag");
 						continue;
@@ -285,4 +312,6 @@ Zotero.ZippyZotero = {
 }
 
 // Initialize the utility
-window.addEventListener("load", function(e) { Zotero.ZippyZotero.init(); }, false);
+window.addEventListener("load", function(e) {
+	Zotero.ZippyZotero.init();
+}, false);
