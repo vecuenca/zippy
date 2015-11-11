@@ -13,7 +13,7 @@ Keep checking back for more updates to zippy!
 # How to install
 1. Clone this repository
 2. Navigate to the 'zippy' folder
-3. Run ```zip -r zippy.xpi .``` 
+3. Run ```zip -r zippy.xpi .```, or use your favorite archive manager to zip up everything in the zippy folder into zippy.xpi.
 4. Drag the xpi file onto your Firefox browser
 5. Enjoy your newfound powers of batch editing and group syncing!
 
@@ -30,7 +30,9 @@ Keep checking back for more updates to zippy!
 2. Click on the 'Move and Sync' button
 3. Select the group you wish move and sync to. Click OK. You're done, pal!
 
+![alt tag](http://i.imgur.com/RTM0LXu.png?2)
+
 Now, changes to the metadata (as well as tags) to the item in the first library 
 will propagate to the newly-moved item in the second library.
 
-![alt tag](http://i.imgur.com/RTM0LXu.png?2)
+
