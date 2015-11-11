@@ -22,7 +22,7 @@ Keep checking back for more updates to zippy!
 1. Access our tags dialog from the settings menu on the Zotero toolbar.
 ![alt tag](http://i.imgur.com/za1dJ9B.png)
 2. Use our batch tag editor to delete or merge tags!
-![alt tag](http://imgur.com/9hH4RMs.png)
+![alt tag](http://i.imgur.com/ammwq4t.png)
 
 
 ## Group sync
