@@ -9,15 +9,21 @@
 		<stringbundle id="zippy-zotero-strings"
 			src="chrome://zippy/locale/zippy.properties"/>
 	</stringbundleset>
-	
+
+	<menupoup id="zotero-itemmenu">
+		<menuseparator id="zotero-itemmenu-plugins-separator" hidden="false"/>
+		<menuitem insertbefore="zotero-itemmenu-plugins-separator" label="&zippyzotero.moveSyncContextButton;" oncommand="Zotero.ZippyZotero.moveAndSync()"/>
+	</menupoup>
+
 	<menupopup id="zotero-tb-actions-popup">
-		<!-- Make sure the menu separator for utilities is visible -->
-		<menuseparator id="zotero-tb-actions-plugins-separator" hidden="false"/>
+		<menuseparator id="zotero-edit-multiple-tags" hidden="false"/>
 		<menuitem insertbefore="zotero-tb-actions-separator" label="&zippyzotero.name;"
-			oncommand="Zotero.ZippyZotero.insertHello()"/>
+			oncommand="Zotero.ZippyEditTags.EditMultipleTags()"/>
 	</menupopup>
-	
+
 	<!-- Include the main extension logic -->
 	<script src="chrome://zotero/content/include.js"/>
+	<script src="chrome://zippy/content/editTags.js"/>
 	<script src="chrome://zippy/content/include.js" type="application/javascript;version=1.8"/>
+
 </overlay>
