@@ -30,10 +30,10 @@
           oncommand="DeselectAllTags();"/>
     </row>
 
-  <vbox flex="1" style="overflow:auto">
+  <vbox>
   <groupbox id="gb">
   <richlistbox 
-    id="tagsList" flex="1" style="overflow: auto">
+    id="tagsList" style="overflow: auto"  width="350" height="300">
     <listhead>
         <listheader fill="search-tags-result" label="Select Tags" hidden="false"/>        
       </listhead>
@@ -54,6 +54,24 @@
 
   <script>
   function enterMergeTag(){
+   var select = false;
+    var tags = Zotero.Tags.getAll();
+    for (var tag in tags) {
+        var tagadd = tags[tag]['_id'];
+        var checked = document.getElementById(tagadd).checked;
+        if(checked){
+          select = true;
+        }
+    }
+
+   if(!select){
+    var prompts = Components.classes["@mozilla.org/embedcomp/prompt-service;1"]
+                        .getService(Components.interfaces.nsIPromptService);
+
+    prompts.alert(null, "No Tag Selected", "Please select tags to merge.");
+   }
+
+  else{
     var prompts = Components.classes["@mozilla.org/embedcomp/prompt-service;1"]
                         .getService(Components.interfaces.nsIPromptService);
 
@@ -64,8 +82,16 @@
     var result = prompts.prompt(null, "Merge Tag", "Please enter the name of merge tag:", input, null, check);
 
     if (result){
+       if(input.value != ""){
     Zotero.ZippyMergeTagsWindow.MergeTagsWin(input);
+}
+else{
+      var prompts = Components.classes["@mozilla.org/embedcomp/prompt-service;1"]
+                        .getService(Components.interfaces.nsIPromptService);
 
+    prompts.alert(null, "No Tag Name entered", "Please enter a name for the merged tag.");
+}
+    }
     }
   } 
 
