@@ -8,7 +8,7 @@ Zotero.ZippyZotero = {
 		this.DB = new Zotero.DBConnection("zippy");
 
 		if (!this.DB.tableExists("links")) {
-			this.DB.query("CREATE TABLE links (id varchar(255) PRIMARY KEY, link varchar(255))");
+			this.DB.query("CREATE TABLE links (id varchar(255), link varchar(255), PRIMARY KEY(id, link))");
 		}
 
 		// Register the callback in Zotero as an item and tag observer
