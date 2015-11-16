@@ -124,7 +124,7 @@ Zotero.ZippyZotero = {
 						for (var j = 0; j < linkedItems.length; j++) {
 							var linkedItem = Zotero.Items.get(linkedItems[j].link);
 							var linkedItemTags = linkedItem.getTags(); // returns array of tags
-							for (var k = 0; k < linkedItemTags; k++) {
+							for (var k = 0; k < linkedItemTags.length; k++) {
 								if (linkedItemTags[k].name === oldTag.name) {
 									Zotero.Tags.rename(linkedItemTags[k].id, modifiedTag.name);
 								}
