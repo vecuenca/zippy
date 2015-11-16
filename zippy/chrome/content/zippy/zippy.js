@@ -72,17 +72,22 @@ Zotero.ZippyZotero = {
 						var linkedItems = Zotero.ZippyZotero.DB.query("SELECT link FROM links WHERE	id='" + items[i].id + "';");
 						if (linkedItems.length) {
 							// Go through linked items, propagate each changed field to the linked item
-							for (var j = 0; j < linkedItems.length; j++) {
-								var linkedItem = Zotero.Items.get(linkedItems[j].link);
-								for (var id in extraData) {
-									for (var field in extraData[id].changed) {
-										if (extraData[id].changed.hasOwnProperty(field)) {
-											// I don;t know if getting this is necessary.. just to be safe perhaps?
-											var mappedFieldID = Zotero.ItemFields.getFieldIDFromTypeAndBase(linkedItem.itemTypeID, field);
-											var fieldID = Zotero.ItemFields.getID(field);
-											linkedItem.setField(mappedFieldID ? mappedFieldID : field, items[i].getField(field));
-											linkedItem.save();
+							if (Zotero.Items.get(items[i].id).deleted) {
+								Zotero.ZippyZotero.DB.query("DELETE FROM links WHERE id='" + items[i].id + "'");
+							}
+							else {
+								for (var j = 0; j < linkedItems.length; j++) {
+									var linkedItem = Zotero.Items.get(linkedItems[j].link);
+									for (var id in extraData) {
+										for (var field in extraData[id].changed) {
+											if (extraData[id].changed.hasOwnProperty(field)) {
+												// I don;t know if getting this is necessary.. just to be safe perhaps?
+												var mappedFieldID = Zotero.ItemFields.getFieldIDFromTypeAndBase(linkedItem.itemTypeID, field);
+												var fieldID = Zotero.ItemFields.getID(field);
+												linkedItem.setField(mappedFieldID ? mappedFieldID : field, items[i].getField(field));
+												linkedItem.save();
 
+											}
 										}
 									}
 								}
@@ -132,30 +137,7 @@ Zotero.ZippyZotero = {
 						}
 					}
 				}
-			} else {
-				/*This is the temporary way to go into event delete.
-				 *Whenever we delete something in personal libraries, we break the link.
-				 */
-				var items = Zotero.Items.get(ids);
-				if (items.length) {
-					for (var i = 0; i < items.length; i++) {
-						Zotero.ZippyZotero.DB.query("DELETE FROM links WHERE id='" + items[i].id + "'");
-					}
-				}
-				//Zotero.ZippyZotero.DB.query("DELETE FROM links WHERE id=56");
-				// var items = Zotero.Items.get(ids);
-				// if (items.length) {
-				// 	for (var i = 0; i < items.length; i++) {
-				// 		Zotero.ZippyZotero.DB.query("DELETE FROM links WHERE id='" + items[i].id + "'");
-				// var linkedItems = Zotero.ZippyZotero.DB.query("SELECT link FROM links WHERE	id='" + items[i].id + "';");
-				// if (linkedItems.length) {
-				// 	for (var j = 0; j < linkedItems.length; j++) {
-				// 		Zotero.ZippyZotero.DB.query("DELETE FROM links WHERE id='" + item[i].id + "'");
-				// 	}
-				// }
-				// }
-				// }
-			}
+			} 
 		}
 	},
 
