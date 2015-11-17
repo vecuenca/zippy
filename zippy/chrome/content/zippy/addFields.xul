@@ -26,7 +26,8 @@
   <script>
 
   function doClear(){
-	alert("clear");
+  document.getElementById("enter-name").reset();
+  document.getElementById("enter-content").reset();
   }
 
   function addField(){
@@ -39,7 +40,7 @@
     pn.alert(null, "Field information not completed", "Please complete information for the new Field.");
   }else{
 
-  
+
   }
 
   }
