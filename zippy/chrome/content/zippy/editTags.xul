@@ -39,11 +39,11 @@
       </listhead>
       <script>
         var checklist = document.getElementById('tagsList');
-        for (var key in window.arguments[1]) {
-          var tagadd = window.arguments[1][key]['_name'];
+        for (var key in window.arguments[0]) {
+          var tagadd = window.arguments[0][key]['_name'];
           var check = document.createElement('checkbox');
           check.setAttribute('label', tagadd );
-          check.setAttribute('id', window.arguments[1][key]['_id'] );
+          check.setAttribute('id', window.arguments[0][key]['_id'] );
           checklist.appendChild(check);
         }
       </script>
@@ -54,21 +54,21 @@
 
   <script>
   function enterMergeTag(){
-   var select = false;
+   var select = 0;
     var tags = Zotero.Tags.getAll();
     for (var tag in tags) {
         var tagadd = tags[tag]['_id'];
         var checked = document.getElementById(tagadd).checked;
         if(checked){
-          select = true;
+          select = select + 1;
         }
     }
 
-   if(!select){
+   if(select &lt; 2){
     var prompts = Components.classes["@mozilla.org/embedcomp/prompt-service;1"]
                         .getService(Components.interfaces.nsIPromptService);
 
-    prompts.alert(null, "No Tag Selected", "Please select tags to merge.");
+    prompts.alert(null, "Not enough Tags Selected", "Please select two or more tags to merge.");
    }
 
   else{
@@ -140,7 +140,7 @@ else{
   function deselectTags(){
   var newTags = Zotero.Tags.getAll();
   var inputval=document.getElementById("enter-tag").value;
-  var newTags = window.arguments[1];
+  var newTags = window.arguments[0];
   var find=false;
   for (var each in newTags) {
     if (newTags[each]['_name']==inputval) {
