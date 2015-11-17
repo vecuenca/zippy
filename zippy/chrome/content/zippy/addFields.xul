@@ -1,0 +1,60 @@
+<?xml version="1.0"?>
+<?xml-stylesheet href="chrome://global/skin/global.css" type="text/css"?>
+<dialog 
+  id="add-Fields" 
+  title="Add Fields"
+  xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul"
+  buttons="cancel"
+  buttonlabelcancel="Exit"
+  ondialogcancel="return doCancel();">
+
+  	<row>
+    <button label="Clear"
+         oncommand="doClear();"/>
+    <button label="Add"
+         oncommand="addField();"/>
+	</row>
+
+    <vbox>
+      <label value="Enter name of Field:    " control="enter-name"/>
+      <textbox id="enter-name" width="30" height="50"/>
+      <label value="Enter content of Field: " control="enter-content"/>
+      <textbox id="enter-content" width="30" height="50"/>
+    </vbox>
+
+
+  <script>
+
+  function doClear(){
+	alert("clear");
+  }
+
+  function addField(){
+  var name=document.getElementById("enter-name").value;
+  var content=document.getElementById("enter-content").value;
+  if((name == "") || (content == "")){
+        var pn = Components.classes["@mozilla.org/embedcomp/prompt-service;1"]
+                        .getService(Components.interfaces.nsIPromptService);
+
+    pn.alert(null, "Field information not completed", "Please complete information for the new Field.");
+  }else{
+
+  
+  }
+
+  }
+
+
+
+  function doCancel(){
+      return true;
+  }
+  </script>
+
+
+  <!-- Include the main extension logic -->
+  <script src="chrome://zippy/content/include.js"/>
+  <script src="chrome://zippy/content/addFields.js"/>
+  <script src="chrome://zotero/content/include.js" type="application/javascript;version=1.8"/>
+
+</dialog>

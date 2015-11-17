@@ -12,6 +12,9 @@
 
 	<menupoup id="zotero-itemmenu">
 		<menuseparator id="zotero-itemmenu-plugins-separator" hidden="false"/>
+		<menuitem insertbefore="zotero-itemmenu-plugins-separator" label="&zippyzotero.addFields;" oncommand="Zotero.ZippyFields.addFields()"/>
+
+				<menuseparator id="zotero-itemmenu-plugins-separator" hidden="false"/>
 		<menuitem insertbefore="zotero-itemmenu-plugins-separator" label="&zippyzotero.moveSyncContextButton;" oncommand="Zotero.ZippyZotero.moveAndSync()"/>
 	</menupoup>
 
@@ -24,6 +27,7 @@
 	<!-- Include the main extension logic -->
 	<script src="chrome://zotero/content/include.js"/>
 	<script src="chrome://zippy/content/editTags.js"/>
+	<script src="chrome://zippy/content/addFields.js"/>
 	<script src="chrome://zippy/content/include.js" type="application/javascript;version=1.8"/>
 
 </overlay>
