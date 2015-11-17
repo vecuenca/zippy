@@ -7,7 +7,8 @@ Zotero.ZippyOpenDialogs = {
 	},
 
 	OpenItemLinksDiag: function() {
-		var somefile = document.getElementById('zippy-zotero-strings').value;
+		// For some reason, I'm not able to access the Zotero object in
+		// the checkbox xul, so I compute all the data required here
 		var linksTable = Zotero.ZippyZotero.DB.query("SELECT * from links;");
 
 		var linkedItems = [];
@@ -21,7 +22,6 @@ Zotero.ZippyOpenDialogs = {
 	    }
 
 		window.openDialog("chrome://zippy/content/editLinks.xul", "editItemLinks",
-			"chrome", somefile, linkedItems);
+			"chrome", linkedItems);
 	}
-
 }
