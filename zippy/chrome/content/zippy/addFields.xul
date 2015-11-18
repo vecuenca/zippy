@@ -17,9 +17,9 @@
 
     <vbox>
       <label value="Enter name of Field:    " control="enter-name"/>
-      <textbox id="enter-name" width="30" height="50"/>
+      <textbox id="enter-name" width="30" height="20"/>
       <label value="Enter content of Field: " control="enter-content"/>
-      <textbox id="enter-content" width="30" height="50"/>
+      <textbox id="enter-content" width="30" height="20"/>
     </vbox>
 
 
