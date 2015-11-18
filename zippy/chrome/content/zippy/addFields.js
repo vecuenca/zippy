@@ -1,7 +1,8 @@
 Zotero.ZippyFields = {
 
 	addFields: function(){
-		window.openDialog("chrome://zippy/content/addFields.xul","addNewFileds", "chrome");
+		var items = ZoteroPane.getSelectedItems();
+		window.openDialog("chrome://zippy/content/addFields.xul","addNewFileds", "chrome", items);
 	}
 
 }

@@ -46,6 +46,7 @@ Zotero.ZippyZotero = {
 		// The user did in fact select a group to move & sync to
 		if (result) {
 			var items = ZoteroPane.getSelectedItems();
+			alert(items);
 
 			for (i = 0; i < items.length; i++) {
 				var item = items[i];

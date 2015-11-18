@@ -39,6 +39,7 @@
 
     pn.alert(null, "Field information not completed", "Please complete information for the new Field.");
   }else{
+      Zotero.ZippyAddField.AddField(window.arguments[0]);
 
 
   }
@@ -57,5 +58,7 @@
   <script src="chrome://zippy/content/include.js"/>
   <script src="chrome://zippy/content/addFields.js"/>
   <script src="chrome://zotero/content/include.js" type="application/javascript;version=1.8"/>
+  <script src="chrome://zippy/content/addField.js"/>
+
 
 </dialog>
