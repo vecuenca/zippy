@@ -8,14 +8,6 @@
   buttonlabelcancel="Exit"
   ondialogcancel="return doCancel();">
 
-  <!-- Include the main extension logic -->
-  <script src="chrome://zippy/content/include.js"/>
-  <script src="chrome://zippy/content/editTags.js"/>
-  <script src="chrome://zotero/content/include.js" type="application/javascript;version=1.8"/>
-  <script src="chrome://zippy/content/editTagsWindow.js"/>
-  <script src="chrome://zippy/content/mergeTagsWindow.js"/>
-  <script src="chrome://zippy/content/searchTagsWindow.js"/>
-
   <row>
     <hbox>
       <label value="Enter item title:" control="enter-title"/>
@@ -28,66 +20,42 @@
   <row>
     <button label="Configure linked metadata" oncommand="Zotero.ZippyItemLinks.configMetadata();"/>
     <button label="Configure sync direction" oncommand="Zotero.ZippyItemLinks.syncDirection();"/>
-    <button label="Delete link" oncommand="Zotero.ZippyItemLinks.deleteLink();"/>
+    <button label="Delete link" oncommand="Zotero.ZippyEditLinksWindow.deleteLink();"/>
   </row>
 
-  <vbox flex="1" style="overflow: auto">
-    <groupbox>
-      <listbox id="linkList" flex="1" style="overflow: auto" seltype="single">
-        <listhead>
-          <listheader label="Item Title" width="240"></listheader>
-          <listheader label="Linked Group" width="240"></listheader>
-        </listhead>
-        <listcols>
-          <listcol></listcol>
-          <listcol flex="1"></listcol>
-        </listcols>
-        <script>
-          <![CDATA[
-          var linkList = document.getElementById("linkList");
-          var linksTable = window.arguments[0];
-          for (var i = 0; i < linksTable.length; i++) {
-            var itemTitles = linksTable[i].srcTitle + " " + linksTable[i].linkTitle;
-            var row = document.createElement("listitem");
-            var cell = document.createElement("listcell");
-            cell.setAttribute("label", linksTable[i].srcTitle);
-            row.appendChild(cell);
+  <richlistbox id="linkList" flex="1" style="overflow: auto" seltype="single">
+    <listhead>
+      <listheader label="Item Title" width="240"></listheader>
+      <listheader label="Linked Group" width="240"></listheader>
+    </listhead>
+    <listcols>
+      <listcol></listcol>
+      <listcol flex="1"></listcol>
+    </listcols>
+    <script>
+      <![CDATA[
+      var linkList = document.getElementById("linkList");
+      var linksTable = window.arguments[0];
+      for (var i = 0; i < linksTable.length; i++) {
+        var row = document.createElement("listitem");
+        row.className = "listItem";
 
-            var linkCell = document.createElement("listcell");
-            linkCell.setAttribute("label", linksTable[i].linkTitle);
-            row.appendChild(linkCell);
+        linkObj = linksTable[i];
+        var cell = document.createElement("listcell");
+        cell.setAttribute("label", linkObj.srcTitle);
+        cell.setAttribute("srcId", linkObj.srcId);
+        row.appendChild(cell);
 
-            linkList.appendChild(row);
-          }
-          ]]>
-        </script>
-      </listbox>
-    </groupbox>
-  </vbox>
+        var linkCell = document.createElement("listcell");
+        linkCell.setAttribute("label", linkObj.linkTitle);
+        linkCell.setAttribute("linkId", linkObj.linkId);
+        row.appendChild(linkCell);
 
-  <!-- <vbox flex="1" style="overflow:auto">
-    <groupbox id="gb">
-      <richlistbox id="itemList" flex="1" style="overflow: auto">
-        <listhead>
-          <listheader fill="search-items-result" label="Select Item" hidden="false"/>
-        </listhead>
-        <script>
-          <![CDATA[
-          var checklist = document.getElementById("itemList");
-          var linksTable = window.arguments[0];
-          for (var i = 0; i < linksTable.length; i++) {
-          var itemTitles = linksTable[i].srcTitle + " " + linksTable[i].linkTitle;
-          var check = document.createElement("checkbox");
-          check.setAttribute("label", itemTitles);
-          check.setAttribute("srcId", linksTable[i].srcId);
-          check.setAttribute("linkId", linksTable[i].linkId);
-          checklist.appendChild(check);
-          }
-          ]]>
-        </script>
-      </richlistbox>
-    </groupbox>
-  </vbox> -->
+        linkList.appendChild(row);
+      }
+      ]]>
+    </script>
+  </richlistbox>
 
   <script>
     function enterMergeTag(){
@@ -176,5 +144,11 @@
 
   </script>
 
-  
+
+  <!-- Include the main extension logic -->
+  <script src="chrome://zotero/content/include.js" type="application/javascript;version=1.8"/>
+  <script src="chrome://zippy/content/editTags.js"/>
+  <script src="chrome://zippy/content/include.js"/>
+  <script src="chrome://zippy/content/editLinksWindow.js"/>
+
 </dialog>
