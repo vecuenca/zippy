@@ -23,6 +23,28 @@
     <button label="Delete link" oncommand="Zotero.ZippyEditLinksWindow.deleteLink();"/>
   </row>
 
+  <tree flex="1" rows="10" seltype="single">
+    <treecols id="treeCols">
+      <treecol id="treeCol-itemTitle" label="ItemTitle" flex="1"></treecol>
+      <treecol id="treeCol-linkedGroup" label="Linked Group" flex="2"></treecol>
+    </treecols>
+
+    <treechildren>
+      <treeitem id="treeItem">
+        <treerow>
+          <treecell></treecell>
+          <treecell></treecell>
+        </treerow>
+      </treeitem>
+    </treechildren>
+    <script>
+      <![CDATA[
+      var treeItem = document.getElementById("treeItem");
+      var linksTable = window.arguments[0];
+      ]]>
+    </script>
+  </tree>
+
   <richlistbox id="linkList" flex="1" style="overflow: auto" seltype="single">
     <listhead>
       <listheader label="Item Title" width="240"></listheader>
