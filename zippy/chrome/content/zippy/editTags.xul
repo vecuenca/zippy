@@ -44,11 +44,11 @@
       <!-- generate checkboxes for all tags -->
       <script>
         var checklist = document.getElementById('tagsList');
-        for (var key in window.arguments[1]) {
-          var tagadd = window.arguments[1][key]['_name'];
+        for (var key in window.arguments[0]) {
+          var tagadd = window.arguments[0][key]['_name'];
           var check = document.createElement('checkbox');
           check.setAttribute('label', tagadd );
-          check.setAttribute('id', window.arguments[1][key]['_id'] );
+          check.setAttribute('id', window.arguments[0][key]['_id'] );
           checklist.appendChild(check);
         }
       </script>
@@ -62,11 +62,29 @@
 
   // Merge seleted tags
   function enterMergeTag(){
-    var select = false;
+   var select = 0;
     var tags = Zotero.Tags.getAll();
     for (var tag in tags) {
-      var tagadd = tags[tag]['_id'];
-      var checked = document.getElementById(tagadd).checked;
+        var tagadd = tags[tag]['_id'];
+        var checked = document.getElementById(tagadd).checked;
+        if(checked){
+          select = select + 1;
+        }
+    }
+
+   // Check if two tags + are selected
+   if(select &lt; 2){
+    var prompts = Components.classes["@mozilla.org/embedcomp/prompt-service;1"]
+                        .getService(Components.interfaces.nsIPromptService);
+
+    prompts.alert(null, "Not enough Tags Selected", "Please select two or more tags to merge.");
+   }
+
+  else{
+    var prompts = Components.classes["@mozilla.org/embedcomp/prompt-service;1"]
+                        .getService(Components.interfaces.nsIPromptService);
+
+    var check = {value: false};
 
       if(checked){ select = true;}
     }
@@ -149,16 +167,14 @@
 
   // deselectTags: deselects tag name if input tag name matches exactly
   function deselectTags(){
-    var newTags = Zotero.Tags.getAll();
-    var inputval=document.getElementById("enter-tag").value;
-    var newTags = window.arguments[1];
-    var find=false;
-
-    for (var each in newTags) {
-      if (newTags[each]['_name']==inputval) {
-        var newID=newTags[each]['_id']
-        find=true;
-      }
+  var newTags = Zotero.Tags.getAll();
+  var inputval=document.getElementById("enter-tag").value;
+  var newTags = window.arguments[0];
+  var find=false;
+  for (var each in newTags) {
+    if (newTags[each]['_name']==inputval) {
+      var newID=newTags[each]['_id']
+      find=true;
     }
 
     if(find){
