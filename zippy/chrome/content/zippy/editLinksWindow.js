@@ -1,20 +1,18 @@
 Zotero.ZippyEditLinksWindow = {
 
 	deleteLink: function() {
-		var itemList = document.getElementById("linkList");
-		var items = document.getElementsByClassName("listItem");
+		var linkTree = document.getElementById("linkTree");
+		var selection = linkTree.view.getItemAtIndex(linkTree.currentIndex);
 
-		for (var i=0; i<items.length; i++) {
-			var tableRow = items[i];
-			if (tableRow.selected) {
-				var result = window.confirm("Are you sure you want to delete this link?");
-				if (result) {
-					Zotero.ZippyZotero.DB.query("DELETE FROM links WHERE id='"
-						+ tableRow.firstChild.getAttribute("srcId") + "' AND link='"
-						+ tableRow.lastChild.getAttribute("linkId") + "';");
+		if (selection) {
+			var result = window.confirm("Are you sure you want to delete this link?");
+			if (result) {
+				var cellText = linkTree.view.getCellText(linkTree.currentIndex, linkTree.columns.getColumnAt(0));
+				Zotero.ZippyZotero.DB.query("DELETE FROM links WHERE id='"
+					+ selection.firstChild.firstChild.getAttribute("srcId") + "' AND link='"
+					+ selection.firstChild.lastChild.getAttribute("linkId") + "';");
 
-					itemList.removeChild(tableRow);
-				}
+				selection.remove();
 			}
 		}
 	}

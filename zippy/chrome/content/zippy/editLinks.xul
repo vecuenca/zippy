@@ -23,7 +23,7 @@
     <button label="Delete link" oncommand="Zotero.ZippyEditLinksWindow.deleteLink();"/>
   </row>
 
-  <tree flex="1" rows="10" seltype="single">
+  <tree id="linkTree" flex="1" rows="10" seltype="single">
     <treecols id="treeCols">
       <treecol id="treeCol-itemTitle" label="Item Title" flex="1"></treecol>
       <treecol id="treeCol-linkedGroup" label="Linked Group" flex="2"></treecol>
@@ -40,9 +40,6 @@
         var treeRow  = document.createElement("treerow");
 
         var linkObj = linksTable[i];
-        console.log("AAAA");
-        console.log(linkObj);
-        console.log(linkObj.srcTitle);
 
         var treeCell = document.createElement("treecell");
         treeCell.setAttribute("label", linkObj.srcTitle);
