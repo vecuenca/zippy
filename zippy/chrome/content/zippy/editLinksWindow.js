@@ -10,7 +10,6 @@ Zotero.ZippyEditLinksWindow = {
 
 			var result = prompts.confirm(null, "Delete Item Link", "Are you sure you want to delete this item link?");
 			if (result) {
-				var cellText = linkTree.view.getCellText(linkTree.currentIndex, linkTree.columns.getColumnAt(0));
 				Zotero.ZippyZotero.DB.query("DELETE FROM links WHERE id='"
 					+ selection.firstChild.firstChild.getAttribute("srcId") + "' AND link='"
 					+ selection.firstChild.lastChild.getAttribute("linkId") + "';");
