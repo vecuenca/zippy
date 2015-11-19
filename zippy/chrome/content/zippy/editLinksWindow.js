@@ -5,7 +5,10 @@ Zotero.ZippyEditLinksWindow = {
 		var selection = linkTree.view.getItemAtIndex(linkTree.currentIndex);
 
 		if (selection) {
-			var result = window.confirm("Are you sure you want to delete this link?");
+			var prompts = Components.classes["@mozilla.org/embedcomp/prompt-service;1"]
+                        .getService(Components.interfaces.nsIPromptService);
+
+			var result = prompts.confirm(null, "Delete Item Link", "Are you sure you want to delete this item link?");
 			if (result) {
 				var cellText = linkTree.view.getCellText(linkTree.currentIndex, linkTree.columns.getColumnAt(0));
 				Zotero.ZippyZotero.DB.query("DELETE FROM links WHERE id='"
