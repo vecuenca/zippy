@@ -1,5 +1,7 @@
 <?xml version="1.0"?>
 <?xml-stylesheet href="chrome://global/skin/global.css" type="text/css"?>
+
+<!-- edit tags addition to Zotero extension -->
 <dialog 
   id="edit-tags" 
   title="Edit Selected Tags"
@@ -8,8 +10,10 @@
   buttonlabelcancel="Exit"
   ondialogcancel="return doCancel();">
 
+    <!-- generate elements in new window -->
     <row>
     <hbox>
+      <!-- tag find field and select and deselect option buttons -->
       <label value="Enter tag name:     " control="enter-tag"/>
       <textbox id="enter-tag"/>
     </hbox>
@@ -18,7 +22,7 @@
       <button label="deselect"
           oncommand="deselectTags();"/>
     </row>  
-
+    <!-- tag edit buttons in window -->
     <row>
       <button label="Delete"
           oncommand="Zotero.ZippyEditTagsWindow.EditTagsWin();"/>
@@ -27,23 +31,24 @@
       <button label="Select All"
           oncommand="selectAllTags();"/>
       <button label="Deselect All"
-          oncommand="DeselectAllTags();"/>
+          oncommand="deselectAllTags();"/>
     </row>
-
+  <!-- box for all tags -->
   <vbox>
   <groupbox id="gb">
   <richlistbox 
     id="tagsList" style="overflow: auto"  width="350" height="300">
     <listhead>
-        <listheader fill="search-tags-result" label="Select Tags" hidden="false"/>        
+        <listheader fill="search-tags-result" label="Select Tags" hidden="false"/>
       </listhead>
+      <!-- generate checkboxes for all tags -->
       <script>
         var checklist = document.getElementById('tagsList');
-        for (var key in window.arguments[1]) {
-          var tagadd = window.arguments[1][key]['_name'];
+        for (var key in window.arguments[0]) {
+          var tagadd = window.arguments[0][key]['_name'];
           var check = document.createElement('checkbox');
           check.setAttribute('label', tagadd );
-          check.setAttribute('id', window.arguments[1][key]['_id'] );
+          check.setAttribute('id', window.arguments[0][key]['_id'] );
           checklist.appendChild(check);
         }
       </script>
@@ -52,23 +57,27 @@
   </groupbox>
    </vbox>
 
+  <!-- tag edit functions -->
   <script>
+
+  // Merge seleted tags
   function enterMergeTag(){
-   var select = false;
+   var select = 0;
     var tags = Zotero.Tags.getAll();
     for (var tag in tags) {
         var tagadd = tags[tag]['_id'];
         var checked = document.getElementById(tagadd).checked;
         if(checked){
-          select = true;
+          select = select + 1;
         }
     }
 
-   if(!select){
+   // Check if two tags + are selected
+   if(select &lt; 2){
     var prompts = Components.classes["@mozilla.org/embedcomp/prompt-service;1"]
                         .getService(Components.interfaces.nsIPromptService);
 
-    prompts.alert(null, "No Tag Selected", "Please select tags to merge.");
+    prompts.alert(null, "Not enough Tags Selected", "Please select two or more tags to merge.");
    }
 
   else{
@@ -77,88 +86,109 @@
 
     var check = {value: false};
 
-    var input = {value: ""};
-
-    var result = prompts.prompt(null, "Merge Tag", "Please enter the name of merge tag:", input, null, check);
-
-    if (result){
-       if(input.value != ""){
-    Zotero.ZippyMergeTagsWindow.MergeTagsWin(input);
-}
-else{
-      var prompts = Components.classes["@mozilla.org/embedcomp/prompt-service;1"]
-                        .getService(Components.interfaces.nsIPromptService);
-
-    prompts.alert(null, "No Tag Name entered", "Please enter a name for the merged tag.");
-}
+      if(checked){ select = true;}
     }
+
+    // CASE: No tag selected
+    if(!select){
+      var prompts = Components.classes["@mozilla.org/embedcomp/prompt-service;1"]
+                          .getService(Components.interfaces.nsIPromptService);
+      prompts.alert(null, "No Tag Selected", "Please select tags to merge.");
+    }
+
+    // CASE: Tags selected, prompt for new tag name
+    else{
+      var prompts = Components.classes["@mozilla.org/embedcomp/prompt-service;1"]
+                          .getService(Components.interfaces.nsIPromptService);
+
+      var check = {value: false};
+      var input = {value: ""};
+      var result = prompts.prompt(null, "Merge Tag", "Please enter the name of merge tag:", input, null, check);
+
+      // Merge Tags
+      if (result){
+        // Correct input
+        if(input.value != ""){
+          Zotero.ZippyMergeTagsWindow.MergeTagsWin(input);
+        }
+        // No merge tag name entered
+        else{
+          var prompts = Components.classes["@mozilla.org/embedcomp/prompt-service;1"].getService(Components.interfaces.nsIPromptService);
+          prompts.alert(null, "No Tag Name entered", "Please enter a name for the merged tag.");
+        }
+      }
     }
   } 
 
 
-
+  // selectAllTags: Selects all tags by checking each tag
   function selectAllTags(){
-  var tags = Zotero.Tags.getAll();
-  for (var key in tags) {
-    var tagadd = tags[key]['_id'];
-    var checkTag = document.getElementById(tagadd).checked = true;
-  }
-
-  }
-
-
-  function DeselectAllTags(){
-  var tags = Zotero.Tags.getAll();
+    var tags = Zotero.Tags.getAll();
     for (var key in tags) {
-    var tagadd = tags[key]['_id'];
-    var checkTag = document.getElementById(tagadd).checked = false;
-  }
-  }
-
-  function selectTags(){
-  var newTags = Zotero.Tags.getAll();
-  var inputval=document.getElementById("enter-tag").value;
-  var find=false;
-  for (var each in newTags) {
-    if (newTags[each]['_name']==inputval) {
-      var newID=newTags[each]['_id']
-      find=true;
+      var tagadd = tags[key]['_id'];
+      var checkTag = document.getElementById(tagadd).checked = true;
     }
   }
-  if(find){
-  var checkTag = document.getElementById(newID).checked = true;
-  }
-  else{
-    var prompts = Components.classes["@mozilla.org/embedcomp/prompt-service;1"]
-                        .getService(Components.interfaces.nsIPromptService);
 
-    prompts.alert(null, "Tag Not Found", "The name of tag is not found.");
-  }
-  
+
+  // deselectAllTags: Deselects all tags by unchecking each tag
+  function deselectAllTags(){
+    var tags = Zotero.Tags.getAll();
+    for (var key in tags) {
+      var tagadd = tags[key]['_id'];
+      var checkTag = document.getElementById(tagadd).checked = false;
+    }
   }
 
+
+  // selectTags: selects tag name if input tag name matches exactly
+  function selectTags(){
+    var newTags = Zotero.Tags.getAll();
+    var inputval=document.getElementById("enter-tag").value;
+    var find=false;
+
+    for (var each in newTags) {
+      if (newTags[each]['_name']==inputval) {
+        var newID=newTags[each]['_id']
+        find=true;
+      }
+    }
+
+    if(find){
+      var checkTag = document.getElementById(newID).checked = true;
+    }
+    else{
+      var prompts = Components.classes["@mozilla.org/embedcomp/prompt-service;1"]
+                          .getService(Components.interfaces.nsIPromptService);
+      prompts.alert(null, "Tag Not Found", "The name of tag is not found.");
+    }
+  }
+
+
+  // deselectTags: deselects tag name if input tag name matches exactly
   function deselectTags(){
   var newTags = Zotero.Tags.getAll();
   var inputval=document.getElementById("enter-tag").value;
-  var newTags = window.arguments[1];
+  var newTags = window.arguments[0];
   var find=false;
   for (var each in newTags) {
     if (newTags[each]['_name']==inputval) {
       var newID=newTags[each]['_id']
       find=true;
     }
-  }
-  if(find){
-  var checkTag = document.getElementById(newID).checked = false;
-  }
-  else{
-   var prompts = Components.classes["@mozilla.org/embedcomp/prompt-service;1"]
-                        .getService(Components.interfaces.nsIPromptService);
 
-    prompts.alert(null, "Tag Not Found", "The name of tag is not found.");
-  }  
+    if(find){
+      var checkTag = document.getElementById(newID).checked = false;
+    }
+    else{
+     var prompts = Components.classes["@mozilla.org/embedcomp/prompt-service;1"]
+                          .getService(Components.interfaces.nsIPromptService);
+      prompts.alert(null, "Tag Not Found", "The name of tag is not found.");
+    }
   }
 
+
+  // doCancel:
   function doCancel(){
       return true;
   }
