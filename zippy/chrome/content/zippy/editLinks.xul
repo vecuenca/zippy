@@ -59,23 +59,7 @@
   </tree>
 
   <script>
-    function enterMergeTag(){
-    var prompts = Components.classes["@mozilla.org/embedcomp/prompt-service;1"]
-    .getService(Components.interfaces.nsIPromptService);
-
-    var check = {value: false};
-
-    var input = {value: ""};
-
-    var result = prompts.prompt(null, "Merge Tag", "Please enter the name of merge tag:", input, null, check);
-
-    if (result){
-    Zotero.ZippyMergeTagsWindow.MergeTagsWin(input);
-
-    }
-    } 
-
-
+    
 
     function selectAllTags(){
     var tags = Zotero.Tags.getAll();
@@ -147,9 +131,9 @@
 
 
   <!-- Include the main extension logic -->
-  <script src="chrome://zotero/content/include.js" type="application/javascript;version=1.8"/>
-  <script src="chrome://zippy/content/editTags.js"/>
   <script src="chrome://zippy/content/include.js"/>
+  <script src="chrome://zippy/content/editTags.js"/>
+  <script src="chrome://zotero/content/include.js" type="application/javascript;version=1.8"/>
   <script src="chrome://zippy/content/editLinksWindow.js"/>
 
 </dialog>
