@@ -1,4 +1,4 @@
-Zotero.ZippyOpenDialogs = {
+Zotero.ZippyEditTags = {
 
 	EditMultipleTags: function() {
 		var somefile = document.getElementById("zippy-zotero-strings").value;
