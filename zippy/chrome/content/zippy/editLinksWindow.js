@@ -16,7 +16,7 @@ Zotero.ZippyEditLinksWindow = {
 		if (selection) {
 			// get all fields of item, their ids, and if they are already synced
 
-			var itemTypeFields = Zotero.ItemFields.getItemTypeFields(srcItem.getType());
+			var itemTypeFields = Zotero.ItemFields.getItemTypeFields(srcItem.itemTypeID);
 
 			for (var i = 0; i < itemTypeFields.length; i++) {
 				var syncedFields = JSON.parse(Zotero.ZippyZotero.DB.query("SELECT data FROM links WHERE id='" + srcItem.id + "' AND link='" + linkItemId + "';"));
