@@ -1,0 +1,43 @@
+<?xml version="1.0"?>
+<?xml-stylesheet href="chrome://global/skin/global.css" type="text/css"?>
+<dialog
+	id="edit-link-fields"
+	title="Edit Link Fields"
+	xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul"
+	buttons="accept,cancel"
+	buttonlabelcancel="Cancel"
+	buttonlabelaccept="Save"
+	ondialogaccept="return Zotero.ZippyEditLinkFieldsWindow.doSave(window.arguments[1], window.arguments[2]);"
+	ondialogcancel="return doCancel();">
+
+	<vbox flex="1" style="overflow:auto">
+		<groupbox id="gb">
+			<richlistbox
+				id="fieldList" flex="1" style="overflow: auto">
+				<listhead>
+					<listheader fill="search-tags-result" label="Select Tags" hidden="false"/>
+				</listhead>
+				<script>
+					<![CDATA[
+					var checklist = document.getElementById("fieldListL);
+					var linkObjs = window.arguments[0];
+					for (var i = 0; i < linkObjs.length; i++) {
+					var chkbox = document.createElement("checkbox");
+					chkbox.setAttribute("label", linkObjs[i].fieldName);
+					chkbox.setAttribute("id", linkObjs[i].fieldId);
+					linkObjs[i].isSynced ? chkbox.checked = true : chkbox.checked = false;
+					checklist.appendChild(chkbox);
+					}
+
+					]]>
+				</script>
+			</richlistbox>
+		</groupbox>
+	</vbox>
+	<!-- Include the main extension logic -->
+	<script src="chrome://zippy/content/include.js"/>
+	<script src="chrome://zippy/content/editTags.js"/>
+	<script src="chrome://zotero/content/include.js" type="application/javascript;version=1.8"/>
+	<script src="chrome://zippy/content/editLinkFields.js"/>
+	<script src="chrome://zippy/content/editLinkFieldsWindow.js"/>
+</dialog>

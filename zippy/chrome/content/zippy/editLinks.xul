@@ -59,25 +59,6 @@
   </tree>
 
   <script>
-    
-
-    function selectAllTags(){
-    var tags = Zotero.Tags.getAll();
-    for (var key in tags) {
-    var tagadd = tags[key]['_id'];
-    var checkTag = document.getElementById(tagadd).checked = true;
-    }
-
-    }
-
-
-    function DeselectAllTags(){
-    var tags = Zotero.Tags.getAll();
-    for (var key in tags) {
-    var tagadd = tags[key]['_id'];
-    var checkTag = document.getElementById(tagadd).checked = false;
-    }
-    }
 
     function selectTags(){
     var newTags = Zotero.Tags.getAll();
