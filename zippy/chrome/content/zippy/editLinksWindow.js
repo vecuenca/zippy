@@ -1,3 +1,4 @@
+"use strict";
 Zotero.ZippyEditLinksWindow = {
 
 	/**
@@ -7,25 +8,24 @@ Zotero.ZippyEditLinksWindow = {
 	 */
 	openConfigLinkFields: function() {
 		var itemFields = [];
-		var selection = document.getElementById("linkTree").view.getItemAtIndex(linkTree.currentIndex);
+		var linkTree = document.getElementById("linkTree");
+		var selection = linkTree.view.getItemAtIndex(linkTree.currentIndex);
+		var srcItem = Zotero.Items.get(selection.firstChild.firstChild.getAttribute("srcId"));
+		var linkItemId = selection.firstChild.lastChild.getAttribute("linkId");
 
 		if (selection) {
 			// get all fields of item, their ids, and if they are already synced
-			var srcItem = Zotero.Items.get(selection.firstChild.firstChild.getAttribute("srcId"));
-			var linkItemId = selection.firstChild.lastChild.getAttribute("linkId");
 
 			var itemTypeFields = Zotero.ItemFields.getItemTypeFields(srcItem.getType());
 
-			for (var i = 0; i < itemTypeFields.length; i++ {
-				var syncedFields = JSON.parse(Zotero.ZippyZotero.DB.query("SELECT data FROM links WHERE id='" + srcItem.id
-					 + "' AND link='" + linkItemId + "';"));
+			for (var i = 0; i < itemTypeFields.length; i++) {
+				var syncedFields = JSON.parse(Zotero.ZippyZotero.DB.query("SELECT data FROM links WHERE id='" + srcItem.id + "' AND link='" + linkItemId + "';"));
 				itemFields.push({fieldId: itemTypeFields[i],
 					fieldName: Zotero.ItemFields.getName(itemTypeFields[i]),
 					isSynced: syncedFields.indexOf(itemTypeFields[i]) > -1 ? true : false})
 			}
 		}
-		window.openDialog("chrome://zippy/content/editLinkFields.xul",
-			"editLinkFields", "chrome", itemFields, srcItem.id, linkItemId);
+		window.openDialog("chrome://zippy/content/editLinkFields.xul", "editLinkFields", "chrome", itemFields, srcItem.id, linkItemId);
 	},
 
 	/**
@@ -42,9 +42,9 @@ Zotero.ZippyEditLinksWindow = {
 
 			var result = prompts.confirm(null, "Delete Item Link", "Are you sure you want to delete this item link?");
 			if (result) {
-				Zotero.ZippyZotero.DB.query("DELETE FROM links WHERE id='"
-					+ selection.firstChild.firstChild.getAttribute("srcId") + "' AND link='"
-					+ selection.firstChild.lastChild.getAttribute("linkId") + "';");
+				Zotero.ZippyZotero.DB.query("DELETE FROM links WHERE id='" +
+					selection.firstChild.firstChild.getAttribute("srcId") + "' AND link='" +
+					selection.firstChild.lastChild.getAttribute("linkId") + "';");
 
 				selection.remove();
 			}
