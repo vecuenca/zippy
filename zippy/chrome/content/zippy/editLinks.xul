@@ -18,8 +18,8 @@
   </row>
 
   <row>
-    <button label="Configure linked metadata" oncommand="Zotero.ZippyItemLinks.configMetadata();"/>
-    <button label="Configure sync direction" oncommand="Zotero.ZippyItemLinks.syncDirection();"/>
+    <button label="Configure linked metadata" oncommand="Zotero.ZippyEditLinksWindow.openConfigLinkFields();"/>
+    <button label="Configure sync direction" oncommand="Zotero.ZippyItemLinks.FIXTHIS;"/>
     <button label="Delete link" oncommand="Zotero.ZippyEditLinksWindow.deleteLink();"/>
   </row>
 
