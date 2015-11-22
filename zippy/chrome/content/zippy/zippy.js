@@ -79,7 +79,7 @@ Zotero.ZippyZotero = {
 								for (var j = 0; j < linkedItems.length; j++) {
 									var linkedItem = Zotero.Items.get(linkedItems[j].link);
 									for (var id in extraData) {
-										//var syncfields = whatever your array is;
+										var syncfields = JSON.parse(Zotero.ZippyZotero.DB.query("SELECT data FROM links WHERE id='" + items[i].id + "' and link='" + linkedItem.id +'";'));
 										for (var field in extraData[id].changed) {
 											if (extraData[id].changed.hasOwnProperty(field)) {
 												// I don;t know if getting this is necessary.. just to be safe perhaps?

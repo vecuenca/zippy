@@ -18,14 +18,22 @@ Zotero.ZippyEditLinksWindow = {
 
 			var itemTypeFields = Zotero.ItemFields.getItemTypeFields(srcItem.itemTypeID);
 
+			var syncedFields = Zotero.ZippyZotero.DB.query("SELECT data FROM links WHERE id='" + srcItem.id + "' AND link='" + linkItemId + "';");
+			if (syncedFields[0].data) {
+				var parsedFields = JSON.parse(syncedFields[0].data);
+			}
 			for (var i = 0; i < itemTypeFields.length; i++) {
-				var syncedFields = JSON.parse(Zotero.ZippyZotero.DB.query("SELECT data FROM links WHERE id='" + srcItem.id + "' AND link='" + linkItemId + "';"));
+				var synced = false;
+				if (syncedFields[0].data) {
+					synced = parsedFields.indexOf(itemTypeFields[i].toString())  > -1 ? true : false;
+				}
 				itemFields.push({fieldId: itemTypeFields[i],
 					fieldName: Zotero.ItemFields.getName(itemTypeFields[i]),
-					isSynced: syncedFields.indexOf(itemTypeFields[i]) > -1 ? true : false})
+					isSynced: synced});
 			}
+			window.openDialog("chrome://zippy/content/editLinkFields.xul", "editLinkFields", "chrome",
+				itemFields, srcItem.id, linkItemId);
 		}
-		window.openDialog("chrome://zippy/content/editLinkFields.xul", "editLinkFields", "chrome", itemFields, srcItem.id, linkItemId);
 	},
 
 	/**

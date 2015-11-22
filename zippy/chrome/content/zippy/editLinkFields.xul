@@ -15,18 +15,23 @@
 			<richlistbox
 				id="fieldList" flex="1" style="overflow: auto">
 				<listhead>
-					<listheader fill="search-tags-result" label="Select Tags" hidden="false"/>
+					<listheader fill="search-tags-result" label="Select Fields to Sync" hidden="false"/>
 				</listhead>
 				<script>
 					<![CDATA[
-					var checklist = document.getElementById("fieldListL);
+					var checklist = document.getElementById("fieldList");
 					var linkObjs = window.arguments[0];
-					for (var i = 0; i < linkObjs.length; i++) {
-					var chkbox = document.createElement("checkbox");
-					chkbox.setAttribute("label", linkObjs[i].fieldName);
-					chkbox.setAttribute("id", linkObjs[i].fieldId);
-					linkObjs[i].isSynced ? chkbox.checked = true : chkbox.checked = false;
-					checklist.appendChild(chkbox);
+						for (var i = 0; i < linkObjs.length; i++) {
+						var chkbox = document.createElement("checkbox");
+						chkbox.setAttribute("label", linkObjs[i].fieldName);
+						chkbox.setAttribute("id", linkObjs[i].fieldId);
+						if (linkObjs[i].isSynced) {
+							chkbox.setAttribute("checked", true)
+						} else {
+							chkbox.setAttribute("checked", false);
+						}
+						chkbox.disabled = false;
+						checklist.appendChild(chkbox);
 					}
 
 					]]>
@@ -34,6 +39,11 @@
 			</richlistbox>
 		</groupbox>
 	</vbox>
+	<script>
+		function doCancel(){
+			return true;
+		}
+	</script>
 	<!-- Include the main extension logic -->
 	<script src="chrome://zippy/content/include.js"/>
 	<script src="chrome://zippy/content/editTags.js"/>
