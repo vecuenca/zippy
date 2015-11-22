@@ -19,7 +19,10 @@ Zotero.ZippyAddField = {
 				var item = items[i];
 				var fieldname = document.getElementById('enter-name').value;
 				var content = document.getElementById('enter-content').value;
-				this.DB.query("INSERT INTO fields (id, field, content) VALUES (" + item.id + "," + fieldname +  "," + content + ")");
+				alert(this.DB);
+				var sql = "INSERT INTO fields VALUES (?,?,?)";
+				Zotero.ZippyAddField.DB.query(sql, [item.id,fieldname,content]);
+				alert('sadsa');
 			}
 	}
 }
