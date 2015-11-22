@@ -79,17 +79,22 @@ Zotero.ZippyZotero = {
 								for (var j = 0; j < linkedItems.length; j++) {
 									var linkedItem = Zotero.Items.get(linkedItems[j].link);
 									for (var id in extraData) {
-										//var syncfields = whatever your array is;
+										var syncfields = Zotero.ZippyZotero.DB.query("SELECT data FROM links WHERE	id='" + items[i].id + "';");;
 										for (var field in extraData[id].changed) {
 											if (extraData[id].changed.hasOwnProperty(field)) {
 												// I don;t know if getting this is necessary.. just to be safe perhaps?
 												var mappedFieldID = Zotero.ItemFields.getFieldIDFromTypeAndBase(linkedItem.itemTypeID, field);
 												var fieldID = Zotero.ItemFields.getID(field);
-												for (var inc=0; inc < syncfields.length; inc++) {
-													if (syncfields[inc] == fieldID && items[i].getField(field) != linkedItem.getField(field)) {
-														//might not need the check for possible infinite loop because if you dont change anything it doesnt seem to be a modify??
-														linkedItem.setField(mappedFieldID ? mappedFieldID : field, items[i].getField(field));
-														linkedItem.save();
+												if (syncfields == null) {
+													linkedItem.setField(mappedFieldID ? mappedFieldID : field, items[i].getField(field));
+													linkedItem.save();
+												}
+												else {
+													for (var inc=0; inc < syncfields.length; inc++) {
+														if (syncfields[inc] == fieldID && items[i].getField(field) != linkedItem.getField(field)) {
+															linkedItem.setField(mappedFieldID ? mappedFieldID : field, items[i].getField(field));
+															linkedItem.save();
+														}
 													}
 												}
 											}
