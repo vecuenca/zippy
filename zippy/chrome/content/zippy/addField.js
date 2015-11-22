@@ -23,7 +23,20 @@ Zotero.ZippyAddField = {
 				var sql = "INSERT INTO fields VALUES (?,?,?)";
 				Zotero.ZippyAddField.DB.query(sql, [item.id,fieldname,content]);
 				alert('sadsa');
+				Zotero.ZippyAddField.FreshContent(fieldname);
+				
 			}
+	},
+
+	FreshContent: function(fieldname) {
+		alert("=====");
+		var newRow = "<treecol id='fieldname' primary='true' label='fieldname' flex='4' persist='width ordinal hidden sortActive sortDirection'/><splitter class='tree-splitter'/>";
+		alert("xxxxxxx");
+		var tree = document.getElementById('zotero-items-columns-header');
+		alert("gggg");
+		tree.appendChild(newRow);
+		alert("dasdasdasdas");
+
 	}
 }
 
