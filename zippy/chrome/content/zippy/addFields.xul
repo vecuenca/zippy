@@ -39,9 +39,7 @@
 
     pn.alert(null, "Field information not completed", "Please complete information for the new Field.");
   }else{
-      Zotero.ZippyAddField.AddField(window.arguments[0]);
-
-
+    Zotero.ZippyAddField.AddField(window.arguments[0]);
   }
 
   }
