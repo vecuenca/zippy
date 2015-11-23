@@ -30,12 +30,13 @@ Zotero.ZippyAddField = {
 
 	FreshContent: function(fieldname, tree, id) {
 		alert(tree.childNodes.toSource());
+		var row = document.createElement("row");
 		var label = document.createElement("label");
-		label.setAttribute('fieldname', "uuuuuu");
+		label.setAttribute('value', '-------');
+		label.setAttribute('fieldname', fieldname);
+		row.appendChild(label);
 		alert("xxxxxxx");
-		tree.appendChild(label);
-		alert(tree.childNodes[0].getAttribute("label"));
-
+		tree.appendChild(row);
 	}
 }
 
