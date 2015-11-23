@@ -79,21 +79,72 @@ Zotero.ZippyZotero = {
 								for (var j = 0; j < linkedItems.length; j++) {
 									var linkedItem = Zotero.Items.get(linkedItems[j].link);
 									for (var id in extraData) {
-										var syncfields = JSON.parse(Zotero.ZippyZotero.DB.query("SELECT data FROM links WHERE id='" + items[i].id + "' and link='" + linkedItem.id +'";')[0].data);
+										//get the array of which data fields the user wants to sync
+										var syncfields = JSON.parse(Zotero.ZippyZotero.DB.query("SELECT data FROM links WHERE id='" + items[i].id + "' and link='" + linkedItem.id + "';")[0].data);
 										for (var field in extraData[id].changed) {
 											if (extraData[id].changed.hasOwnProperty(field)) {
-												// I don;t know if getting this is necessary.. just to be safe perhaps?
-												var mappedFieldID = Zotero.ItemFields.getFieldIDFromTypeAndBase(linkedItem.itemTypeID, field);
-												var fieldID = Zotero.ItemFields.getID(field);
-												if (syncfields == null) {
-													linkedItem.setField(mappedFieldID ? mappedFieldID : field, items[i].getField(field));
-													linkedItem.save();
+												//sync each creator
+												if (field == "creators") {
+													if (syncfields == null) {
+														var count = 0;
+														//loop through until there are no creators left
+														while (items[i].getCreator(count) != false) {
+															var creatortype = "";
+															var creator = new Zotero.Creator;
+															if (items[i].getCreator(count).creatorTypeID == 1) {
+																creatortype = "author";
+															}
+															else if (items[i].getCreator(count).creatorTypeID == 2) {
+																creatortype = "editor";
+															}
+															creator.firstName = items[i].getCreator(count).ref.firstName;
+															creator.lastName = items[i].getCreator(count).ref.lastName;
+															creator.save();
+															linkedItem.setCreator(count, creator, creatortype);
+															count ++;
+														}
+														linkedItem.save();
+													}
+													else {
+														//search if the user included authors as one of the fields to sync
+														for (var inc = 0; inc < syncfields.length; inc++) {
+															if (syncfields[inc] == -1) {
+																var count = 0;
+																while (items[i].getCreator(count) != false) {
+																	var creatortype = "";
+																	var creator = new Zotero.Creator;
+																	if (items[i].getCreator(count).creatorTypeID == 1) {
+																		creatortype = "author";
+																	}
+																	else if (items[i].getCreator(count).creatorTypeID == 2) {
+																		creatortype = "editor";
+																	}
+																	creator.firstName = items[i].getCreator(count).ref.firstName;
+																	creator.lastName = items[i].getCreator(count).ref.lastName;
+																	creator.save();
+																	linkedItem.setCreator(count, creator, creatortype);
+																	count ++;
+																}
+																linkedItem.save();
+															}
+														}
+													}
 												}
+												//avoid error in the setting of mappedFieldID if field is creators
 												else {
-													for (var inc=0; inc < syncfields.length; inc++) {
-														if (syncfields[inc] == fieldID.toString() && items[i].getField(field) != linkedItem.getField(field)) {
-															linkedItem.setField(mappedFieldID ? mappedFieldID : field, items[i].getField(field));
-															linkedItem.save();
+													// I don;t know if getting this is necessary.. just to be safe perhaps?
+													var mappedFieldID = Zotero.ItemFields.getFieldIDFromTypeAndBase(linkedItem.itemTypeID, field);
+													var fieldID = Zotero.ItemFields.getID(field);
+													if (syncfields == null) {
+														linkedItem.setField(mappedFieldID ? mappedFieldID : field, items[i].getField(field));
+														linkedItem.save();
+													}
+													else {
+														for (var inc=0; inc < syncfields.length; inc++) {
+															if (syncfields[inc] == fieldID.toString() && items[i].getField(field) != linkedItem.getField(field)) {
+																linkedItem.setField(mappedFieldID ? mappedFieldID : field, items[i].getField(field));
+																linkedItem.save();
+															}
 														}
 													}
 												}
