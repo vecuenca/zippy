@@ -80,22 +80,6 @@
     prompts.alert(null, "Not enough Tags Selected", "Please select two or more tags to merge.");
    }
 
-  else{
-    var prompts = Components.classes["@mozilla.org/embedcomp/prompt-service;1"]
-                        .getService(Components.interfaces.nsIPromptService);
-
-    var check = {value: false};
-
-      if(checked){ select = true;}
-    }
-
-    // CASE: No tag selected
-    if(!select){
-      var prompts = Components.classes["@mozilla.org/embedcomp/prompt-service;1"]
-                          .getService(Components.interfaces.nsIPromptService);
-      prompts.alert(null, "No Tag Selected", "Please select tags to merge.");
-    }
-
     // CASE: Tags selected, prompt for new tag name
     else{
       var prompts = Components.classes["@mozilla.org/embedcomp/prompt-service;1"]
@@ -160,7 +144,7 @@
     else{
       var prompts = Components.classes["@mozilla.org/embedcomp/prompt-service;1"]
                           .getService(Components.interfaces.nsIPromptService);
-      prompts.alert(null, "Tag Not Found", "The name of tag is not found.");
+      prompts.alert(null, "Tag Not Found", "Please enter a tag or the tag does not exist.");
     }
   }
 
@@ -184,7 +168,7 @@
     else{
       var prompts = Components.classes["@mozilla.org/embedcomp/prompt-service;1"]
                           .getService(Components.interfaces.nsIPromptService);
-      prompts.alert(null, "Tag Not Found", "The name of tag is not found.");
+      prompts.alert(null, "Tag Not Found", "Please enter a tag or the tag does not exist.");
     }
   }
 
