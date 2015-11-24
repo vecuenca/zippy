@@ -10,8 +10,9 @@ Zotero.ZippyEditLinkFieldsWindow = {
 	doSave: function(srcId, linkId) {
 		var checkboxes = document.getElementsByTagName("checkbox");
 		var newFields = [];
+
 		for (var i = 0; i < checkboxes.length; i++) {
-			if (checkboxes[i].hasAttribute("checked")) {
+			if (checkboxes[i].getAttribute("checked") == "true") {
 				newFields.push(checkboxes[i].getAttribute("id"));
 			}
 		}
