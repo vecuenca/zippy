@@ -146,12 +146,7 @@ var ZoteroItemPane = new function() {
 			box.mode = 'edit';
 		}
 		box.item = item;
-		alert(item.id);
-		var win = Components.classes["@mozilla.org/appshell/window-mediator;1"]
-						.getService(Components.interfaces.nsIWindowMediator)
-						.getMostRecentWindow("navigator:browser");
-		win.Zotero.ZippyRefresh.Refresh(item.id);
-		alert("good");
+		Zotero.ZippyRefresh.Refresh(item.id);
 	}
 	
 	

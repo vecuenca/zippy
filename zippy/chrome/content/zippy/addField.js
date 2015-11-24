@@ -19,22 +19,19 @@ Zotero.ZippyAddField = {
 
 
 	AddField: function(items, tree) {
-		alert("in add field");
-		alert(this.tree);
 		for (var i = 0; i < items.length; i++) {
 				var item = items[i];
 				var fieldname = document.getElementById('enter-name').value;
 				var content = document.getElementById('enter-content').value;
 				var sql = "INSERT INTO fields VALUES (?,?,?)";
 				Zotero.ZippyAddField.DB.query(sql, [item.id,fieldname,content]);
-				Zotero.ZippyAddField.FreshContent(fieldname, tree, content);
+				Zotero.ZippyAddField.FreshContent(fieldname, content);
 				
 			}
 	},
 
-	FreshContent: function(fieldname, tree, content) {
-		alert("test tree");
-		alert(this.tree);
+	FreshContent: function(fieldname, content) {
+		
 		var row = document.createElement("row");
 		var label = document.createElement("label");
 		var label2 = document.createElement("label");
@@ -42,7 +39,7 @@ Zotero.ZippyAddField = {
 		label2.setAttribute('value', content);
 		row.appendChild(label);
 		row.appendChild(label2);
-		tree.appendChild(row);
+		this.tree.appendChild(row);
 	},
 
 }
