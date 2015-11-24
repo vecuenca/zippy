@@ -31,6 +31,10 @@ Zotero.ZippyEditLinksWindow = {
 					fieldName: Zotero.ItemFields.getName(itemTypeFields[i]),
 					isSynced: synced});
 			}
+
+			// creators don't belong to an item's type fields, so we do this instead
+			var creatorsSynced = parsedFields.indexOf("-1") > -1 ? true : false;
+			itemFields.push({fieldId: -1, fieldName: "creators", isSynced: creatorsSynced});
 			window.openDialog("chrome://zippy/content/editLinkFields.xul", "editLinkFields", "chrome",
 				itemFields, srcItem.id, linkItemId);
 		}
