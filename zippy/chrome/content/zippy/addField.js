@@ -8,7 +8,10 @@ Zotero.ZippyAddField = {
 
 	init: function() {
 		this.DB = new Zotero.DBConnection("zippy");
-this.tree = ZoteroPane.document.getElementById('dynamic-fields');
+		var win = Components.classes["@mozilla.org/appshell/window-mediator;1"]
+						.getService(Components.interfaces.nsIWindowMediator)
+						.getMostRecentWindow("navigator:browser");
+		this.tree = win.ZoteroPane.document.getElementById('dynamic-fields');
 		if (!this.DB.tableExists("fields")) {
 			this.DB.query("CREATE TABLE fields (id varchar(255), field varchar(255),content varchar(255))");
 		}
