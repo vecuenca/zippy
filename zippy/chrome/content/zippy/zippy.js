@@ -20,6 +20,7 @@ Zotero.ZippyZotero = {
 		}, false);
 	},
 
+
 	/**
 	 * Called when the user selects 'Move and Sync' from an item context menu.
 	 * Moves the selected item to the selected group, and sets up the link in our local DB.

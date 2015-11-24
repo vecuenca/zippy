@@ -8,8 +8,7 @@ Zotero.ZippyAddField = {
 
 	init: function() {
 		this.DB = new Zotero.DBConnection("zippy");
-		this.tree = ZoteroPane.document.getElementById('dynamic-fields');
-
+this.tree = ZoteroPane.document.getElementById('dynamic-fields');
 		if (!this.DB.tableExists("fields")) {
 			this.DB.query("CREATE TABLE fields (id varchar(255), field varchar(255),content varchar(255))");
 		}
@@ -17,6 +16,8 @@ Zotero.ZippyAddField = {
 
 
 	AddField: function(items, tree) {
+		alert("in add field");
+		alert(this.tree);
 		for (var i = 0; i < items.length; i++) {
 				var item = items[i];
 				var fieldname = document.getElementById('enter-name').value;
@@ -29,6 +30,8 @@ Zotero.ZippyAddField = {
 	},
 
 	FreshContent: function(fieldname, tree, content) {
+		alert("test tree");
+		alert(this.tree);
 		var row = document.createElement("row");
 		var label = document.createElement("label");
 		var label2 = document.createElement("label");
@@ -39,13 +42,6 @@ Zotero.ZippyAddField = {
 		tree.appendChild(row);
 	},
 
-	Refresh: function(id){
-		var sql = "SELECT field, content FROM fields WHERE id=?";
-		var items = Zotero.ZippyAddField.DB.query(sql, id);
-		for (var i = 0; i < items.length; i++) {
-			Zotero.ZippyAddField.FreshContent(items[i].field, this.tree, items[i].content);
-		}
-	}
 }
 
 // Initialize the utility

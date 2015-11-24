@@ -3,3 +3,5 @@
 					.getService(Components.interfaces.mozIJSSubScriptLoader);
 	loader.loadSubScript("chrome://zippy/content/zippy.js");
 	loader.loadSubScript("chrome://zippy/content/addField.js");
+	loader.loadSubScript("chrome://zippy/content/addFields.js");
+	loader.loadSubScript("chrome://zippy/content/refresh.js");

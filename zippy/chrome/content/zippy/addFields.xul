@@ -57,6 +57,7 @@
   <script src="chrome://zippy/content/addFields.js"/>
   <script src="chrome://zotero/content/include.js" type="application/javascript;version=1.8"/>
   <script src="chrome://zippy/content/addField.js"/>
+  <script src="chrome://zippy/content/refresh.js"/>
 
 
 </dialog>
