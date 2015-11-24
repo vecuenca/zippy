@@ -146,6 +146,9 @@ var ZoteroItemPane = new function() {
 			box.mode = 'edit';
 		}
 		box.item = item;
+		alert(item.id);
+		Zotero.ZippyRefresh.Refresh(item.id);
+		alert("good");
 	}
 	
 	

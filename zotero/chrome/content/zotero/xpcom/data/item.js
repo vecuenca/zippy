@@ -1021,7 +1021,6 @@ Zotero.Item.prototype.numCreators = function() {
 	if (!this._creatorsLoaded && this.id) {
 		this._loadCreators();
 	}
-	Zotero.ZippyAddField.Refresh(this.id);
 	return this._creators.length;
 }
 
