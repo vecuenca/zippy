@@ -52,19 +52,14 @@ Zotero.ZippyZotero = {
 				var newId = this.copyItem(item, groupObjs[selected.value].libraryID);
 				var linkedItem = Zotero.Items.get(newId);
 				var count = 0;
+				//Sync the creators field when the item is copied
 				while (items[i].getCreator(count) != false) {
-					var creatortype = "";
+					var creatortype = ['', 'author', 'contributor', 'editor', 'translator', 'series editor'];
 					var creator = new Zotero.Creator;
-					if (items[i].getCreator(count).creatorTypeID == 1) {
-						creatortype = "author";
-					}
-					else if (items[i].getCreator(count).creatorTypeID == 2) {
-						creatortype = "editor";
-					}
 					creator.firstName = items[i].getCreator(count).ref.firstName;
 					creator.lastName = items[i].getCreator(count).ref.lastName;
 					creator.save();
-					linkedItem.setCreator(count, creator, creatortype);
+					linkedItem.setCreator(count, creator, creatortype[items[i].getCreator(count).creatorTypeID]);
 					count ++;
 				}
 				linkedItem.save();
@@ -103,22 +98,17 @@ Zotero.ZippyZotero = {
 											if (extraData[id].changed.hasOwnProperty(field)) {
 												//sync each creator
 												if (field == "creators") {
+													var creatortype = ['', 'author', 'contributor', 'editor', 'translator', 'series editor'];
 													if (syncfields == null) {
 														var count = 0;
 														//loop through until there are no creators left
 														while (items[i].getCreator(count) != false) {
-															var creatortype = "";
 															var creator = new Zotero.Creator;
-															if (items[i].getCreator(count).creatorTypeID == 1) {
-																creatortype = "author";
-															}
-															else if (items[i].getCreator(count).creatorTypeID == 2) {
-																creatortype = "editor";
-															}
 															creator.firstName = items[i].getCreator(count).ref.firstName;
 															creator.lastName = items[i].getCreator(count).ref.lastName;
+															creator.birthYear = items[i].getCreator(count).ref.birthYear;
 															creator.save();
-															linkedItem.setCreator(count, creator, creatortype);
+															linkedItem.setCreator(count, creator, creatortype[items[i].getCreator(count).creatorTypeID]);
 															count ++;
 														}
 														while (linkedItem.getCreator(count) != false) {
@@ -133,18 +123,12 @@ Zotero.ZippyZotero = {
 															if (syncfields[inc] == -1) {
 																var count = 0;
 																while (items[i].getCreator(count) != false) {
-																	var creatortype = "";
 																	var creator = new Zotero.Creator;
-																	if (items[i].getCreator(count).creatorTypeID == 1) {
-																		creatortype = "author";
-																	}
-																	else if (items[i].getCreator(count).creatorTypeID == 2) {
-																		creatortype = "editor";
-																	}
 																	creator.firstName = items[i].getCreator(count).ref.firstName;
 																	creator.lastName = items[i].getCreator(count).ref.lastName;
+																	creator.birthYear = items[i].getCreator(count).ref.birthYear;
 																	creator.save();
-																	linkedItem.setCreator(count, creator, creatortype);
+																	linkedItem.setCreator(count, creator, creatortype[items[i].getCreator(count).creatorTypeID]);
 																	count ++;
 																}
 																while (linkedItem.getCreator(count) != false) {
