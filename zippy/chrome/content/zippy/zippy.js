@@ -50,6 +50,24 @@ Zotero.ZippyZotero = {
 			for (i = 0; i < items.length; i++) {
 				var item = items[i];
 				var newId = this.copyItem(item, groupObjs[selected.value].libraryID);
+				var linkedItem = Zotero.Items.get(newId);
+				var count = 0;
+				while (items[i].getCreator(count) != false) {
+					var creatortype = "";
+					var creator = new Zotero.Creator;
+					if (items[i].getCreator(count).creatorTypeID == 1) {
+						creatortype = "author";
+					}
+					else if (items[i].getCreator(count).creatorTypeID == 2) {
+						creatortype = "editor";
+					}
+					creator.firstName = items[i].getCreator(count).ref.firstName;
+					creator.lastName = items[i].getCreator(count).ref.lastName;
+					creator.save();
+					linkedItem.setCreator(count, creator, creatortype);
+					count ++;
+				}
+				linkedItem.save();
 				this.DB.query("INSERT INTO links (id, link) VALUES (" + item.id + "," + newId + ")");
 			}
 		}
@@ -103,6 +121,10 @@ Zotero.ZippyZotero = {
 															linkedItem.setCreator(count, creator, creatortype);
 															count ++;
 														}
+														while (linkedItem.getCreator(count) != false) {
+															linkedItem.removeCreator(count);
+															count ++;
+														}
 														linkedItem.save();
 													}
 													else {
@@ -123,6 +145,10 @@ Zotero.ZippyZotero = {
 																	creator.lastName = items[i].getCreator(count).ref.lastName;
 																	creator.save();
 																	linkedItem.setCreator(count, creator, creatortype);
+																	count ++;
+																}
+																while (linkedItem.getCreator(count) != false) {
+																	linkedItem.removeCreator(count);
 																	count ++;
 																}
 																linkedItem.save();
