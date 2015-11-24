@@ -2,7 +2,10 @@ Zotero.ZippyRefresh = {
 
 	Refresh: function(id){
 		alert("refresh");
-		var tree = ZoteroPane.document.getElementById('dynamic-fields');
+		var win = Components.classes["@mozilla.org/appshell/window-mediator;1"]
+						.getService(Components.interfaces.nsIWindowMediator)
+						.getMostRecentWindow("navigator:browser");
+		var tree = win.ZoteroPane.document.getElementById('dynamic-fields');
 		alert(tree);
 		alert("aaaaaaaaaaaaaaaaa");
 		var sql = "SELECT field, content FROM fields WHERE id=?";
