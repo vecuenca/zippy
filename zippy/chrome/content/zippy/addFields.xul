@@ -33,7 +33,7 @@
   function addField(){
   var name=document.getElementById("enter-name").value;
   var content=document.getElementById("enter-content").value;
-  if((name == "") || (content == "") || (name == " ") || (content == " ")){
+  if((name.trim() == "") || (content.trim() == "")){
         var pn = Components.classes["@mozilla.org/embedcomp/prompt-service;1"]
                         .getService(Components.interfaces.nsIPromptService);
 
