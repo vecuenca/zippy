@@ -13,13 +13,11 @@
       <label value="Enter item title:" control="enter-title"/>
       <textbox id="select-item-title"/>
     </hbox>
-    <button label="Select" oncommand="selectTags();"/>
-    <button label="Deselect" oncommand="deselectTags();"/>
+    <button label="Select" oncommand="Zotero.ZippyEditLinksWindow.selectItem();"/>
   </row>
 
   <row>
     <button label="Configure linked metadata" oncommand="Zotero.ZippyEditLinksWindow.openConfigLinkFields();"/>
-    <button label="Configure sync direction" oncommand="Zotero.ZippyItemLinks.FIXTHIS;"/>
     <button label="Delete link" oncommand="Zotero.ZippyEditLinksWindow.deleteLink();"/>
   </row>
 
@@ -59,51 +57,6 @@
   </tree>
 
   <script>
-
-    function selectTags(){
-    var newTags = Zotero.Tags.getAll();
-    var inputval=document.getElementById("enter-tag").value;
-    var find=false;
-    for (var each in newTags) {
-    if (newTags[each]['_name']==inputval) {
-    var newID=newTags[each]['_id']
-    find=true;
-    }
-    }
-    if(find){
-    var checkTag = document.getElementById(newID).checked = true;
-    }
-    else{
-    var prompts = Components.classes["@mozilla.org/embedcomp/prompt-service;1"]
-    .getService(Components.interfaces.nsIPromptService);
-
-    prompts.alert(null, "Tag Not Found", "The name of tag is not found.");
-    }
-
-    }
-
-    function deselectTags(){
-    var newTags = Zotero.Tags.getAll();
-    var inputval=document.getElementById("enter-tag").value;
-    var newTags = window.arguments[1];
-    var find=false;
-    for (var each in newTags) {
-    if (newTags[each]['_name']==inputval) {
-    var newID=newTags[each]['_id']
-    find=true;
-    }
-    }
-    if(find){
-    var checkTag = document.getElementById(newID).checked = false;
-    }
-    else{
-    var prompts = Components.classes["@mozilla.org/embedcomp/prompt-service;1"]
-    .getService(Components.interfaces.nsIPromptService);
-
-    prompts.alert(null, "Tag Not Found", "The name of tag is not found.");
-    }  
-    }
-
     function doCancel(){
     return true;
     }

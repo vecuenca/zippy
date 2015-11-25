@@ -61,5 +61,32 @@ Zotero.ZippyEditLinksWindow = {
 				selection.remove();
 			}
 		}
+	},
+
+	selectItem: function() {
+		var searchTerm = document.getElementById("select-item-title").value;
+		var treeCells = document.getElementsByTagName("treecell");
+		var rowIndex = -1;
+		var linkTree = document.getElementById("linkTree");
+		if (treeCells[0].getAttribute("label") === searchTerm) {
+			linkTree.treeBoxObject.view.selection.select(0);
+			return;
+		}
+		for (var i = 0; i < treeCells.length; i++) {
+			if (treeCells[i].getAttribute("label") === searchTerm) {
+				rowIndex++;
+				break;
+			}
+			if (treeCells[i].getAttribute("srcId")) {
+				console.log("le");
+				rowIndex++;
+			}
+		}
+
+		console.log(linkTree);
+		console.log(rowIndex);
+		if (rowIndex) {
+			linkTree.treeBoxObject.view.selection.select(rowIndex);
+		}
 	}
 }
