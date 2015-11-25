@@ -21,8 +21,10 @@
 
 	<menupopup id="zotero-tb-actions-popup">
 		<menuseparator id="zotero-edit-multiple-tags" hidden="false"/>
-		<menuitem insertbefore="zotero-tb-actions-separator" label="&zippyzotero.name;"
+		<menuitem insertbefore="zotero-tb-actions-separator" id="edit-tags-menu-btn" label="&zippyzotero.name;"
 			oncommand="Zotero.ZippyEditTags.EditMultipleTags()"/>
+		<menuitem insertbefore="zotero-tb-actions-separator" id="edit-links-menu-btn" label="&zippyzotero.manageLinksMenuButton;"
+			oncommand="Zotero.ZippyEditTags.OpenItemLinksDiag()"/>
 	</menupopup>
 
 	<!-- Include the main extension logic -->
