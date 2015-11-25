@@ -80,22 +80,6 @@
     prompts.alert(null, "Not enough Tags Selected", "Please select two or more tags to merge.");
    }
 
-  else{
-    var prompts = Components.classes["@mozilla.org/embedcomp/prompt-service;1"]
-                        .getService(Components.interfaces.nsIPromptService);
-
-    var check = {value: false};
-
-      if(checked){ select = true;}
-    }
-
-    // CASE: No tag selected
-    if(!select){
-      var prompts = Components.classes["@mozilla.org/embedcomp/prompt-service;1"]
-                          .getService(Components.interfaces.nsIPromptService);
-      prompts.alert(null, "No Tag Selected", "Please select tags to merge.");
-    }
-
     // CASE: Tags selected, prompt for new tag name
     else{
       var prompts = Components.classes["@mozilla.org/embedcomp/prompt-service;1"]
@@ -160,33 +144,33 @@
     else{
       var prompts = Components.classes["@mozilla.org/embedcomp/prompt-service;1"]
                           .getService(Components.interfaces.nsIPromptService);
-      prompts.alert(null, "Tag Not Found", "The name of tag is not found.");
+      prompts.alert(null, "Tag Not Found", "Please enter a tag or the tag does not exist.");
     }
   }
 
 
   // deselectTags: deselects tag name if input tag name matches exactly
   function deselectTags(){
-  var newTags = Zotero.Tags.getAll();
-  var inputval=document.getElementById("enter-tag").value;
-  var newTags = window.arguments[0];
-  var find=false;
-  for (var each in newTags) {
-    if (newTags[each]['_name']==inputval) {
-      var newID=newTags[each]['_id']
-      find=true;
+    var newTags = Zotero.Tags.getAll();
+    var inputval=document.getElementById("enter-tag").value;
+    var find=false;
+
+    for (var each in newTags) {
+      if (newTags[each]['_name']==inputval) {
+        var newID=newTags[each]['_id']
+        find=true;
+      }
     }
 
     if(find){
       var checkTag = document.getElementById(newID).checked = false;
     }
     else{
-     var prompts = Components.classes["@mozilla.org/embedcomp/prompt-service;1"]
+      var prompts = Components.classes["@mozilla.org/embedcomp/prompt-service;1"]
                           .getService(Components.interfaces.nsIPromptService);
-      prompts.alert(null, "Tag Not Found", "The name of tag is not found.");
+      prompts.alert(null, "Tag Not Found", "Please enter a tag or the tag does not exist.");
     }
   }
-
 
   // doCancel:
   function doCancel(){
