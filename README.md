@@ -31,11 +31,19 @@ Keep checking back for more updates to zippy!
 2. Click on the 'Move and Sync' button
 3. Select the group you wish move and sync to. Click OK. You're done, pal!
 
-![alt tag](http://i.imgur.com/RTM0LXu.png?2)
+![alt tag](http://i.imgur.com/7XVcnsj.png)
 
 Now, changes to the metadata (as well as tags) to the item in the first library 
 will propagate to the newly-moved item in the second library.
 
-## 
+
+
+## Customized field
+1. Right click on the item you wish to add customized fields to 
+2. Click on the 'Add fields' button
+3. enter the field name and content for the customized field
+4. click Add button
+
+![alt tag](http://i.imgur.com/CsSQfqi.png)
 
 
