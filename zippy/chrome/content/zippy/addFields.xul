@@ -1,5 +1,7 @@
 <?xml version="1.0"?>
 <?xml-stylesheet href="chrome://global/skin/global.css" type="text/css"?>
+
+<!-- edit fields addition to Zotero extension -->
 <dialog 
   id="add-Fields" 
   title="Add Fields"
@@ -8,13 +10,15 @@
   buttonlabelcancel="Exit"
   ondialogcancel="return doCancel();">
 
-  	<row>
+<!-- generate elements in new window -->
+  <row>
     <button label="Clear"
          oncommand="doClear();"/>
     <button label="Add"
          oncommand="addField();"/>
-	</row>
+  </row>
 
+    <!-- enter information about fields -->
     <vbox>
       <label value="Enter name of Field:    " control="enter-name"/>
       <textbox id="enter-name" width="30" height="20"/>
@@ -24,28 +28,27 @@
 
 
   <script>
-
+  // clear the box
   function doClear(){
-  document.getElementById("enter-name").reset();
-  document.getElementById("enter-content").reset();
+    document.getElementById("enter-name").reset();
+    document.getElementById("enter-content").reset();
   }
 
+  // add input field
   function addField(){
-  var name=document.getElementById("enter-name").value;
-  var content=document.getElementById("enter-content").value;
-  if((name.trim() == "") || (content.trim() == "")){
+    var name=document.getElementById("enter-name").value;
+    var content=document.getElementById("enter-content").value;
+    if((name.trim() == "") || (content.trim() == "")){
         var pn = Components.classes["@mozilla.org/embedcomp/prompt-service;1"]
                         .getService(Components.interfaces.nsIPromptService);
 
-    pn.alert(null, "Field information not completed", "Please complete information for the new Field.");
-  }else{
-    Zotero.ZippyAddField.AddField(window.arguments[0], window.arguments[1]);
+        pn.alert(null, "Field information not completed", "Please complete information for the new Field.");
+    }else{
+      Zotero.ZippyAddField.AddField(window.arguments[0]);
+    }
   }
 
-  }
-
-
-
+  // exit the winodw
   function doCancel(){
       return true;
   }

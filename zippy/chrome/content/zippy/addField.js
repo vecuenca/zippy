@@ -27,13 +27,15 @@ Zotero.ZippyAddField = {
 
 				var selectSql = "SELECT field, content FROM fields WHERE id=?";
 				var checkItems = Zotero.ZippyAddField.DB.query(selectSql, item.id);
+				var pn = Components.classes["@mozilla.org/embedcomp/prompt-service;1"]
+                        .getService(Components.interfaces.nsIPromptService);
 
 				var ItemExist = false;
 				if(checkItems){
 					for (var i = 0; i < checkItems.length; i++) {
 						if((checkItems[i].field == fieldname) && (checkItems[i].content == content)){
 							ItemExist = true;
-							alert("Input field exists");
+							pn.alert(null, null, "Input field exists.");
 						}
 					}
 				}
@@ -42,6 +44,7 @@ Zotero.ZippyAddField = {
 				var sql = "INSERT INTO fields VALUES (?,?,?)";
 				Zotero.ZippyAddField.DB.query(sql, [item.id,fieldname,content]);
 				Zotero.ZippyAddField.FreshContent(fieldname, content);
+				pn.alert(null, "Congratulation", "New Field added successfully!");
 				}
 			}
 	},
