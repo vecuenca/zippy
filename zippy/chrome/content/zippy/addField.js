@@ -15,6 +15,7 @@ Zotero.ZippyAddField = {
 		if (!this.DB.tableExists("fields")) {
 			this.DB.query("CREATE TABLE fields (id varchar(255), field varchar(255),content varchar(255))");
 		}
+		win.document.getElementById("zotero-pane").addEventListener("select", function(event) { Zotero.ZippyRefresh.Refresh();},false);
 	},
 
 	/* Add, and name new input field and its' content */
