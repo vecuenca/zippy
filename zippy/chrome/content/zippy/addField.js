@@ -5,7 +5,7 @@ Zotero.ZippyAddField = {
 	DB: null,
 	tree: null,
 
-
+	/* initalize */
 	init: function() {
 		this.DB = new Zotero.DBConnection("zippy");
 		var win = Components.classes["@mozilla.org/appshell/window-mediator;1"]
@@ -17,24 +17,28 @@ Zotero.ZippyAddField = {
 		}
 	},
 
-
+	/* Add, and name new input field and its' content */
 	AddField: function(items, tree) {
 		for (var i = 0; i < items.length; i++) {
 				var item = items[i];
 				var fieldname = document.getElementById('enter-name').value;
 				var content = document.getElementById('enter-content').value;
+
+				/* submit into sql databases */
 				var sql = "INSERT INTO fields VALUES (?,?,?)";
 				Zotero.ZippyAddField.DB.query(sql, [item.id,fieldname,content]);
 				Zotero.ZippyAddField.FreshContent(fieldname, content);
-				
 			}
 	},
 
+	/* Create new field and content in database */
 	FreshContent: function(fieldname, content) {
-		
+
 		var row = document.createElement("row");
 		var label = document.createElement("label");
 		var label2 = document.createElement("label");
+
+		// insert into database
 		label.setAttribute('value', fieldname+":");
 		label2.setAttribute('value', content);
 		row.appendChild(label);
