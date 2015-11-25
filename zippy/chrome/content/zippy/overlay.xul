@@ -2,6 +2,7 @@
 <?xml-stylesheet href="chrome://zippy/skin/overlay.css" type="text/css"?>
 <!DOCTYPE window SYSTEM "chrome://zippy/locale/zippy.dtd">
 
+<!-- Overlay for zippy, used to overlay the existing Zotero extension -->
 <overlay id="zippy-overlay"
 	xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
 
