@@ -39,10 +39,10 @@ will propagate to the newly-moved item in the second library.
 You can manage your linked items by clicking "Manage item links" from the Zotero Actions dropdown.  
 ![alt tag](http://i.imgur.com/BT6WMtx.png)  
 
-Here you can view and delete your links. If you select a link and click "Configure linked metadata"...  
+Here you can view and delete your links. If you select a link and click "Configure linked metadata"..  
 ![alt tag](http://i.imgur.com/8pPhtN1.png?1)  
 
-You can choose which item fields are synced!
+You can choose which item fields are synced!  
 ![alt tag](http://i.imgur.com/mHYQszg.png?1)  
 
 
