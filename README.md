@@ -51,9 +51,12 @@ You can choose which item fields are synced!
 ## Customized field
 1. Right click on the item you wish to add customized fields to 
 2. Click on the 'Add fields' button
+
+![alt tag](http://i.imgur.com/CsSQfqi.png)
+
 3. enter the field name and content for the customized field
 4. click Add button
 
-![alt tag](http://i.imgur.com/CsSQfqi.png)
+![alt tag](http://i.imgur.com/UWhWtM5.png)
 
 
