@@ -24,10 +24,24 @@ Zotero.ZippyAddField = {
 				var fieldname = document.getElementById('enter-name').value;
 				var content = document.getElementById('enter-content').value;
 
+				var selectSql = "SELECT field, content FROM fields WHERE id=?";
+				var checkItems = Zotero.ZippyAddField.DB.query(selectSql, item.id);
+
+				var ItemExist = false;
+				if(checkItems){
+					for (var i = 0; i < checkItems.length; i++) {
+						if((checkItems[i].field == fieldname) && (checkItems[i].content == content)){
+							ItemExist = true;
+							alert("Input field exists");
+						}
+					}
+				}
+				if(!ItemExist){
 				/* submit into sql databases */
 				var sql = "INSERT INTO fields VALUES (?,?,?)";
 				Zotero.ZippyAddField.DB.query(sql, [item.id,fieldname,content]);
 				Zotero.ZippyAddField.FreshContent(fieldname, content);
+				}
 			}
 	},
 
