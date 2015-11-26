@@ -12,19 +12,26 @@
 	</stringbundleset>
 
 	<menupoup id="zotero-itemmenu">
+		<menuseparator id="zotero-add-fields" hidden="false"/>
+		<menuitem insertbefore="zotero-itemmenu-plugins-separator" label="&zippyzotero.addFields;" oncommand="Zotero.ZippyFields.addFields()"/>
+
 		<menuseparator id="zotero-itemmenu-plugins-separator" hidden="false"/>
 		<menuitem insertbefore="zotero-itemmenu-plugins-separator" label="&zippyzotero.moveSyncContextButton;" oncommand="Zotero.ZippyZotero.moveAndSync()"/>
 	</menupoup>
 
 	<menupopup id="zotero-tb-actions-popup">
 		<menuseparator id="zotero-edit-multiple-tags" hidden="false"/>
-		<menuitem insertbefore="zotero-tb-actions-separator" label="&zippyzotero.name;"
+		<menuitem insertbefore="zotero-tb-actions-separator" id="edit-tags-menu-btn" label="&zippyzotero.name;"
 			oncommand="Zotero.ZippyEditTags.EditMultipleTags()"/>
+		<menuitem insertbefore="zotero-tb-actions-separator" id="edit-links-menu-btn" label="&zippyzotero.manageLinksMenuButton;"
+			oncommand="Zotero.ZippyEditTags.OpenItemLinksDiag()"/>
 	</menupopup>
 
 	<!-- Include the main extension logic -->
-	<script src="chrome://zotero/content/include.js"/>
+	<script src="chrome://zippy/content/include.js"/>
 	<script src="chrome://zippy/content/editTags.js"/>
-	<script src="chrome://zippy/content/include.js" type="application/javascript;version=1.8"/>
+	<script src="chrome://zippy/content/refresh.js"/>
+	<script src="chrome://zippy/content/addFields.js"/>
+	<script src="chrome://zotero/content/include.js" type="application/javascript;version=1.8"/>
 
 </overlay>
