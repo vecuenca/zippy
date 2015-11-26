@@ -8,7 +8,7 @@ Zotero.ZippyZotero = {
 		this.DB = new Zotero.DBConnection("zippy");
 
 		if (!this.DB.tableExists("links")) {
-			this.DB.query("CREATE TABLE links (id varchar(255), link varchar(255))");
+			this.DB.query("CREATE TABLE links (id varchar(255), link varchar(255), data varchar(255), PRIMARY KEY(id, link))");
 		}
 
 		// Register the callback in Zotero as an item and tag observer
@@ -50,6 +50,19 @@ Zotero.ZippyZotero = {
 			for (i = 0; i < items.length; i++) {
 				var item = items[i];
 				var newId = this.copyItem(item, groupObjs[selected.value].libraryID);
+				var linkedItem = Zotero.Items.get(newId);
+				var count = 0;
+				//Sync the creators field when the item is copied
+				while (items[i].getCreator(count) != false) {
+					var creatortype = ['', 'author', 'contributor', 'editor', 'translator', 'series editor'];
+					var creator = new Zotero.Creator;
+					creator.firstName = items[i].getCreator(count).ref.firstName;
+					creator.lastName = items[i].getCreator(count).ref.lastName;
+					creator.save();
+					linkedItem.setCreator(count, creator, creatortype[items[i].getCreator(count).creatorTypeID]);
+					count ++;
+				}
+				linkedItem.save();
 				this.DB.query("INSERT INTO links (id, link) VALUES (" + item.id + "," + newId + ")");
 			}
 		}
@@ -72,17 +85,80 @@ Zotero.ZippyZotero = {
 						var linkedItems = Zotero.ZippyZotero.DB.query("SELECT link FROM links WHERE	id='" + items[i].id + "';");
 						if (linkedItems.length) {
 							// Go through linked items, propagate each changed field to the linked item
-							for (var j = 0; j < linkedItems.length; j++) {
-								var linkedItem = Zotero.Items.get(linkedItems[j].link);
-								for (var id in extraData) {
-									for (var field in extraData[id].changed) {
-										if (extraData[id].changed.hasOwnProperty(field)) {
-											// I don;t know if getting this is necessary.. just to be safe perhaps?
-											var mappedFieldID = Zotero.ItemFields.getFieldIDFromTypeAndBase(linkedItem.itemTypeID, field);
-											var fieldID = Zotero.ItemFields.getID(field);
-											linkedItem.setField(mappedFieldID ? mappedFieldID : field, items[i].getField(field));
-											linkedItem.save();
-
+							if (Zotero.Items.get(items[i].id).deleted) {
+								Zotero.ZippyZotero.DB.query("DELETE FROM links WHERE id='" + items[i].id + "'");
+							}
+							else {
+								for (var j = 0; j < linkedItems.length; j++) {
+									var linkedItem = Zotero.Items.get(linkedItems[j].link);
+									for (var id in extraData) {
+										//get the array of which data fields the user wants to sync
+										var syncfields = JSON.parse(Zotero.ZippyZotero.DB.query("SELECT data FROM links WHERE id='" + items[i].id + "' and link='" + linkedItem.id + "';")[0].data);
+										for (var field in extraData[id].changed) {
+											if (extraData[id].changed.hasOwnProperty(field)) {
+												//sync each creator
+												if (field == "creators") {
+													var creatortype = ['', 'author', 'contributor', 'editor', 'translator', 'series editor'];
+													if (syncfields == null) {
+														var count = 0;
+														//loop through until there are no creators left
+														while (items[i].getCreator(count) != false) {
+															var creator = new Zotero.Creator;
+															creator.firstName = items[i].getCreator(count).ref.firstName;
+															creator.lastName = items[i].getCreator(count).ref.lastName;
+															creator.birthYear = items[i].getCreator(count).ref.birthYear;
+															creator.save();
+															linkedItem.setCreator(count, creator, creatortype[items[i].getCreator(count).creatorTypeID]);
+															count ++;
+														}
+														while (linkedItem.getCreator(count) != false) {
+															linkedItem.removeCreator(count);
+															count ++;
+														}
+														linkedItem.save();
+													}
+													else {
+														//search if the user included authors as one of the fields to sync
+														for (var inc = 0; inc < syncfields.length; inc++) {
+															if (syncfields[inc] == -1) {
+																var count = 0;
+																while (items[i].getCreator(count) != false) {
+																	var creator = new Zotero.Creator;
+																	creator.firstName = items[i].getCreator(count).ref.firstName;
+																	creator.lastName = items[i].getCreator(count).ref.lastName;
+																	creator.birthYear = items[i].getCreator(count).ref.birthYear;
+																	creator.save();
+																	linkedItem.setCreator(count, creator, creatortype[items[i].getCreator(count).creatorTypeID]);
+																	count ++;
+																}
+																while (linkedItem.getCreator(count) != false) {
+																	linkedItem.removeCreator(count);
+																	count ++;
+																}
+																linkedItem.save();
+															}
+														}
+													}
+												}
+												//avoid error in the setting of mappedFieldID if field is creators
+												else {
+													// I don;t know if getting this is necessary.. just to be safe perhaps?
+													var mappedFieldID = Zotero.ItemFields.getFieldIDFromTypeAndBase(linkedItem.itemTypeID, field);
+													var fieldID = Zotero.ItemFields.getID(field);
+													if (syncfields == null) {
+														linkedItem.setField(mappedFieldID ? mappedFieldID : field, items[i].getField(field));
+														linkedItem.save();
+													}
+													else {
+														for (var inc=0; inc < syncfields.length; inc++) {
+															if (syncfields[inc] == fieldID.toString() && items[i].getField(field) != linkedItem.getField(field)) {
+																linkedItem.setField(mappedFieldID ? mappedFieldID : field, items[i].getField(field));
+																linkedItem.save();
+															}
+														}
+													}
+												}
+											}
 										}
 									}
 								}
@@ -124,7 +200,7 @@ Zotero.ZippyZotero = {
 						for (var j = 0; j < linkedItems.length; j++) {
 							var linkedItem = Zotero.Items.get(linkedItems[j].link);
 							var linkedItemTags = linkedItem.getTags(); // returns array of tags
-							for (var k = 0; k < linkedItemTags; k++) {
+							for (var k = 0; k < linkedItemTags.length; k++) {
 								if (linkedItemTags[k].name === oldTag.name) {
 									Zotero.Tags.rename(linkedItemTags[k].id, modifiedTag.name);
 								}
@@ -132,30 +208,7 @@ Zotero.ZippyZotero = {
 						}
 					}
 				}
-			} else {
-				/*This is the temporary way to go into event delete.
-				 *Whenever we delete something in personal libraries, we break the link.
-				 */
-				var items = Zotero.Items.get(ids);
-				if (items.length) {
-					for (var i = 0; i < items.length; i++) {
-						Zotero.ZippyZotero.DB.query("DELETE FROM links WHERE id='" + items[i].id + "'");
-					}
-				}
-				//Zotero.ZippyZotero.DB.query("DELETE FROM links WHERE id=56");
-				// var items = Zotero.Items.get(ids);
-				// if (items.length) {
-				// 	for (var i = 0; i < items.length; i++) {
-				// 		Zotero.ZippyZotero.DB.query("DELETE FROM links WHERE id='" + items[i].id + "'");
-				// var linkedItems = Zotero.ZippyZotero.DB.query("SELECT link FROM links WHERE	id='" + items[i].id + "';");
-				// if (linkedItems.length) {
-				// 	for (var j = 0; j < linkedItems.length; j++) {
-				// 		Zotero.ZippyZotero.DB.query("DELETE FROM links WHERE id='" + item[i].id + "'");
-				// 	}
-				// }
-				// }
-				// }
-			}
+			} 
 		}
 	},
 

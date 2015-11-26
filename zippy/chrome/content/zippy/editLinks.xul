@@ -1,0 +1,73 @@
+<?xml version="1.0"?>
+<?xml-stylesheet href="chrome://global/skin/global.css" type="text/css"?>
+<dialog
+  id="edit-item-links"
+  title="Edit Item Links"
+  xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul"
+  buttons="cancel"
+  buttonlabelcancel="Exit"
+  ondialogcancel="return doCancel();">
+
+  <row>
+    <hbox>
+      <label value="Enter item title:" control="enter-title"/>
+      <textbox id="select-item-title"/>
+    </hbox>
+    <button label="Select" oncommand="Zotero.ZippyEditLinksWindow.selectItem();"/>
+  </row>
+
+  <row>
+    <button label="Configure linked metadata" oncommand="Zotero.ZippyEditLinksWindow.openConfigLinkFields();"/>
+    <button label="Delete link" oncommand="Zotero.ZippyEditLinksWindow.deleteLink();"/>
+  </row>
+
+  <tree id="linkTree" flex="1" rows="10" seltype="single">
+    <treecols id="treeCols">
+      <treecol id="treeCol-itemTitle" label="Item Title" flex="1"></treecol>
+      <treecol id="treeCol-linkedGroup" label="Linked Group" flex="2"></treecol>
+    </treecols>
+
+    <treechildren id="treechildren">
+    </treechildren>
+    <script>
+      <![CDATA[
+      var treeChildren = document.getElementById("treechildren");
+      var linksTable = window.arguments[0];
+      for (var i=0; i < linksTable.length; i++) {
+        var treeItem = document.createElement("treeitem");
+        var treeRow  = document.createElement("treerow");
+
+        var linkObj = linksTable[i];
+
+        var treeCell = document.createElement("treecell");
+        treeCell.setAttribute("label", linkObj.srcTitle);
+        treeCell.setAttribute("srcId", linkObj.srcId);
+        treeRow.appendChild(treeCell);
+
+        var linkCell = document.createElement("treecell");
+        linkCell.setAttribute("label", linkObj.linkTitle);
+        linkCell.setAttribute("linkId", linkObj.linkId);
+        treeRow.appendChild(linkCell);
+        treeItem.appendChild(treeRow);
+
+        treeChildren.appendChild(treeItem);
+      }
+      ]]>
+    </script>
+  </tree>
+
+  <script>
+    function doCancel(){
+    return true;
+    }
+
+  </script>
+
+
+  <!-- Include the main extension logic -->
+  <script src="chrome://zippy/content/include.js"/>
+  <script src="chrome://zippy/content/editTags.js"/>
+  <script src="chrome://zotero/content/include.js" type="application/javascript;version=1.8"/>
+  <script src="chrome://zippy/content/editLinksWindow.js"/>
+
+</dialog>
