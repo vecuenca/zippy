@@ -92,7 +92,7 @@
       // Merge Tags
       if (result){
         // Correct input
-        if(input.value.trim() != ""){
+        if(input.value != ""){
           Zotero.ZippyMergeTagsWindow.MergeTagsWin(input);
         }
         // No merge tag name entered
