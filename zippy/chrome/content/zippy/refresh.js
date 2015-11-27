@@ -16,7 +16,7 @@ Zotero.ZippyRefresh = {
 		var sql = "SELECT field, content FROM fields WHERE id=?";
 		var items = Zotero.ZippyAddField.DB.query(sql, id);
 		for (var i = 0; i < items.length; i++) {
-			Zotero.ZippyAddField.FreshContent(items[i].field, items[i].content);
+			Zotero.ZippyAddField.FreshContent(items[i].field, items[i].content, id);
 		}
 	}
 }

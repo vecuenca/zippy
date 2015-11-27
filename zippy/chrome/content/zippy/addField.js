@@ -4,14 +4,15 @@ Zotero.ZippyAddField = {
 
 	DB: null,
 	tree: null,
+	win: null,
 
 	/* initalize */
 	init: function() {
 		this.DB = new Zotero.DBConnection("zippy");
-		var win = Components.classes["@mozilla.org/appshell/window-mediator;1"]
+		this.win = Components.classes["@mozilla.org/appshell/window-mediator;1"]
 						.getService(Components.interfaces.nsIWindowMediator)
 						.getMostRecentWindow("navigator:browser");
-		this.tree = win.ZoteroPane.document.getElementById('dynamic-fields');
+		this.tree = this.win.ZoteroPane.document.getElementById('dynamic-fields');
 		if (!this.DB.tableExists("fields")) {
 			this.DB.query("CREATE TABLE fields (id varchar(255), field varchar(255),content varchar(255))");
 		}
@@ -42,25 +43,41 @@ Zotero.ZippyAddField = {
 				/* submit into sql databases */
 				var sql = "INSERT INTO fields VALUES (?,?,?)";
 				Zotero.ZippyAddField.DB.query(sql, [item.id,fieldname,content]);
-				Zotero.ZippyAddField.FreshContent(fieldname, content);
+				Zotero.ZippyAddField.FreshContent(fieldname, content, item.id);
 				pn.alert(null, "Congratulation", "New Field added successfully!");
 				}
 			}
 	},
 
+
+	RemoveField: function(fieldname, content, id, rowid){
+		var sql = "DELETE FROM fields WHERE id = ? AND field = ? AND content = ?";
+		Zotero.ZippyAddField.DB.query(sql, [id, fieldname, content]);
+		var row = this.win.ZoteroPane.document.getElementById(rowid);
+		this.tree.removeChild(row);
+	},
+
 	/* Create new field and content in database */
-	FreshContent: function(fieldname, content) {
+	FreshContent: function(fieldname, content, id) {
 
 		var row = document.createElement("row");
 		var label = document.createElement("label");
 		var label2 = document.createElement("label");
-
+		var button = document.createElement("button");
+		
 		// insert into database
+		row.setAttribute('id', id+":"+fieldname + ":" + content);
 		label.setAttribute('value', fieldname+":");
 		label2.setAttribute('value', content);
+		button.setAttribute('label', "remove");
+
 		row.appendChild(label);
 		row.appendChild(label2);
+		row.appendChild(button);
+		
 		this.tree.appendChild(row);
+
+		button.addEventListener("click", function(event) {Zotero.ZippyAddField.RemoveField(fieldname,content,id, id+":"+fieldname + ":" + content);},false);
 	},
 
 }
