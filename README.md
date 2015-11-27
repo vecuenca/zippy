@@ -11,19 +11,36 @@ As of the time of writing, we have completed initial versions of batch tag editi
 Keep checking back for more updates to zippy!
 
 # How to install
+## Prepare
 1. Clone this repository
 2. Navigate to the 'zippy' folder
 3. Run ```zip -r zippy.xpi .```, or use your favorite archive manager to zip up everything in the zippy folder into zippy.xpi.
-4. Drag the xpi file onto your Firefox browser
-5. Enjoy your newfound powers of batch editing and group syncing!
+
+## Firefox
+1. Drag the xpi file onto your Firefox browser. 
+2. Click on "Install" button.
+
+![alt tag](http://i.imgur.com/qTqE4w4.png)
+
+3.Click on "Restart" button to restart the firefox.
+
+![alt tag](http://i.imgur.com/62BVasR.png)
+
+If it doesn't work, click the menu button ![alt tag](http://i.imgur.com/8K1FUBd.png) and choose Add-ons. The Add-ons Manager tab will open. Drag the xpi file onto Add-ones window and repeat the steps.
+
+## Standalone
+Go to Tools-Add-ones, the Add-ons Manager tab will open. Drag the xpi file onto Add-ones window, and restart the standalone.
+
+![alt tag](http://i.imgur.com/ap4Acc2.png)
+
+Enjoy your newfound powers of batch editing and group syncing!
 
 # How to use our plugin
 ## Batch tag editor
 1. Access our tags dialog from the settings menu on the Zotero toolbar.
 ![alt tag](http://i.imgur.com/za1dJ9B.png)
 2. Use our batch tag editor to delete or merge tags!
-
-![alt tag](http://i.imgur.com/ammwq4t.png)
+![alt tag](http://i.imgur.com/Lmi6ptO.png)
 
 
 ## Group sync
@@ -32,6 +49,7 @@ Keep checking back for more updates to zippy!
 3. Select the group you wish move and sync to. Click OK. You're done, pal!
 
 ![alt tag](http://i.imgur.com/7XVcnsj.png)
+![alt tag](http://i.imgur.com/e1GKWF2.png)
 
 Now, changes to the metadata (as well as tags) to the item in the first library 
 will propagate to the newly-moved item in the second library.

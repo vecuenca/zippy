@@ -27,13 +27,23 @@ Zotero.ZippyEditLinksWindow = {
 				if (syncedFields[0].data) {
 					synced = parsedFields.indexOf(itemTypeFields[i].toString())  > -1 ? true : false;
 				}
-				itemFields.push({fieldId: itemTypeFields[i],
-					fieldName: Zotero.ItemFields.getName(itemTypeFields[i]),
-					isSynced: synced});
+				if  (parsedFields) {
+					itemFields.push({fieldId: itemTypeFields[i],
+						fieldName: Zotero.ItemFields.getName(itemTypeFields[i]),
+						isSynced: synced});
+				} else {
+					itemFields.push({fieldId: itemTypeFields[i],
+						fieldName: Zotero.ItemFields.getName(itemTypeFields[i]),
+						isSynced: true});
+				}
 			}
 
-			// creators don't belong to an item's type fields, so we do this instead
-			var creatorsSynced = parsedFields.indexOf("-1") > -1 ? true : false;
+			if (parsedFields) {
+				// creators don't belong to an item's type fields, so we do this instead
+				var creatorsSynced = parsedFields.indexOf("-1") > -1 ? true : false;
+			} else {
+				var creatorsSynced = true;
+			}
 			itemFields.push({fieldId: -1, fieldName: "creators", isSynced: creatorsSynced});
 			window.openDialog("chrome://zippy/content/editLinkFields.xul", "editLinkFields", "chrome",
 				itemFields, srcItem.id, linkItemId);
